@@ -10,9 +10,9 @@ function createRequest(method, url) {
 }
 
 // Make the actual CORS request.
-function makeRequest(word) {
+function makeRequest(phrase) {
 
-  let url = `query?word=${word}`;
+  let url = `query?phrase=${phrase}`;
 
   let xhr = createRequest('GET', url);
 

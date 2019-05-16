@@ -1,10 +1,13 @@
 "use strict";
 
+
 const APIrequest = require('request');
 const http = require('http');
 
 const APIkey = "AIzaSyDZJDlLpGWdRPQKVpmWLlFtGc-eh4QDpp4";  // ADD API KEY HERE
 const url = "https://translation.googleapis.com/language/translate/v2?key="+APIkey
+
+let instring = "Hello Kirsten";
 
 // An object containing the data expressing the query to the
 // translate API. 
@@ -14,7 +17,7 @@ let requestObject =
 	"source": "en",
 	"target": "hi",
 	"q": [
-	    "Hello Kirsten"
+	    `${instring}`
 	]
     }
 
