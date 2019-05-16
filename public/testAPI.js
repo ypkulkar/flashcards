@@ -1,9 +1,9 @@
-"use strict"
+"use strict";
 
 const APIrequest = require('request');
 const http = require('http');
 
-const APIkey = none;  // ADD API KEY HERE
+const APIkey = "AIzaSyDZJDlLpGWdRPQKVpmWLlFtGc-eh4QDpp4";  // ADD API KEY HERE
 const url = "https://translation.googleapis.com/language/translate/v2?key="+APIkey
 
 // An object containing the data expressing the query to the
@@ -12,9 +12,9 @@ const url = "https://translation.googleapis.com/language/translate/v2?key="+APIk
 let requestObject = 
     {
 	"source": "en",
-	"target": "ko",
+	"target": "hi",
 	"q": [
-	    "example phrase"
+	    "Hello Kirsten"
 	]
     }
 
