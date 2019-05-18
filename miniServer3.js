@@ -1,8 +1,6 @@
 const express = require('express')
 const port = 52560; 
 
-var tempRes = undefined;
-
 function queryHandler(req, res, next) {
     let url = req.url;
     let qObj = req.query;
@@ -10,8 +8,6 @@ function queryHandler(req, res, next) {
     if (qObj.phrase != undefined) {
         let temp = qObj.phrase;
 	get_translation(temp,res);
-	tempRes = res;
-	//res.json( {"palindrome" : qObj.word + temp} );
     }
     else {
 	next();
@@ -94,8 +90,7 @@ function get_translation(instring,res){
 				//console.log("\n\nJSON was:");
 				//console.log(JSON.stringify(APIresBody, undefined, 2));
 				// print it out as a string, nicely formatted
-				tempRes.json( {"translation":APIresBody.data.translations[0].translatedText});
-				tempRes.end();
+				res.json( {"translation":APIresBody.data.translations[0].translatedText});
 				}
 			}
 		} // end callback function

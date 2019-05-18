@@ -11,9 +11,7 @@ button.addEventListener("click",function(){
 orscFunction = function(){
 	console.log("Ready state change");
 	if(xhr.readyState == 4){
-		console.log(xhr.responseText);
-		console.log(xhr.status);	
-		if(xhr.status == 100){
+		if(xhr.status == 200){
 			object = JSON.parse(xhr.responseText);
 			output.textContent = object.translation;
 			console.log(object.translation);	
