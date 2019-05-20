@@ -1,7 +1,5 @@
 "strict mode";
 
-// Do a CORS request to get Davis weather hourly forecast
-
 // Create the XHR object.
 function createRequest(method, url) {
   let xhr = new XMLHttpRequest();
@@ -9,12 +7,24 @@ function createRequest(method, url) {
   return xhr;
 }
 
-// Make the actual CORS request.
-function makeRequest(phrase) {
+function saveRequest(engPhrase, hinPhrase){
+  //let url = `store?engPhrase=${engPhrase}&hinPhrase=${hinPhrase}`;
+  let url = `store?engPhrase=${engPhrase}&hinPhrase=${hinPhrase}`;
+  let xhr = createRequest('POST', url);
+  return makeRequest(xhr);
+}
 
+function translateRequest(phrase){
   let url = `query?phrase=${phrase}`;
-
   let xhr = createRequest('GET', url);
+  return makeRequest(xhr);
+}
+
+
+
+// Make the actual CORS request.
+function makeRequest(xhr) {
+
 
   // checking if browser does CORS
   if (!xhr) {
@@ -25,8 +35,8 @@ function makeRequest(phrase) {
   // Load some functions into response handlers.
   xhr.onload = function() {
       //console.log(xhr);
-      let responseStr = xhr.response;  // get the JSON string 
-      let object = JSON.parse(responseStr);  // turn it into an object
+      //let responseStr = xhr.response;  // get the JSON string 
+      //let object = JSON.parse(responseStr);  // turn it into an object
       //console.log(JSON.stringify(object, undefined, 2));  // print it out as a string, nicely formatted
   };
 

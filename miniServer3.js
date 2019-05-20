@@ -1,5 +1,15 @@
 const express = require('express')
 const port = 52560; 
+const sqlite3 = require("sqlite3").verbose();  // use sqlite
+const fs = require("fs"); // file system
+const dbFileName = "Flashcards.db";
+
+const db = new sqlite3.Database(dbFileName, (err) => {
+	if(err){
+		console.error(err.message);
+	}
+	console.log('Connected to the database');
+});
 
 function queryHandler(req, res, next) {
     let url = req.url;
@@ -7,15 +17,39 @@ function queryHandler(req, res, next) {
     console.log(qObj);
     if (qObj.phrase != undefined) {
         let temp = qObj.phrase;
-	get_translation(temp,res);
+		get_translation(temp,res);
     }
     else {
-	next();
+		next();
+    }
+}
+
+function storeCard(req, res, next) {
+	let sObj = req.query;
+        let url = req.url;
+	console.log(url);
+	console.log("req = "+req);
+    console.log(sObj);
+	if (sObj.engPhrase != undefined && sObj.hinPhrase != undefined) {
+		let engPhrase = sObj.engPhrase;
+		let hinPhrase = sObj.hinPhrase;
+		cmdStr = 'INSERT INTO Flashcards(user, english, hindi, seen, correct) VALUES(1,@0,@1,0,0)';
+		db.run(cmdStr, engPhrase, hinPhrase, function(err) {
+			if (err) {
+			  return console.log(err.message);
+			}
+			// get the last insert id
+			console.log(`A row has been inserted with rowid ${this.lastID}`);
+		  });
+			}
+    else {
+		next();
     }
 }
 
 function fileNotFound(req, res) {
     let url = req.url;
+    console.log("url= "+url);
     res.type('text/plain');
     res.status(404);
     res.send('Cannot find '+url);
@@ -25,6 +59,7 @@ function fileNotFound(req, res) {
 const app = express()
 app.use(express.static('public'));  // can I find a static file? 
 app.get('/query', queryHandler );   // if not, is it a valid query?
+app.post('/store', storeCard);	    // is it a valid request to store a card?
 app.use( fileNotFound );            // otherwise not found
 
 app.listen(port, function (){console.log('Listening...');} )

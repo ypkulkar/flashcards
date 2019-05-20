@@ -1,7 +1,6 @@
 // Globals
 const sqlite3 = require("sqlite3").verbose();  // use sqlite
 const fs = require("fs"); // file system
-
 const dbFileName = "Flashcards.db";
 
 const db = new sqlite3.Database(dbFileName, (err) => {
