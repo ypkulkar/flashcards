@@ -1,11 +1,20 @@
-const button = document.querySelector("#submit-button");
+const submit_button = document.querySelector("#submit-button");
+const save_button = document.querySelector("#save-button");
 const input = document.querySelector("#phrase");
 const output = document.querySelector("#translation");
 
-button.addEventListener("click",function(){
+submit_button.addEventListener("click",function(){
 	var phrase = input.value;
-	xhr = makeRequest(phrase);
+	xhr = translateRequest(phrase);
 	xhr.onreadystatechange = orscFunction;
+});
+
+save_button.addEventListener("click",function(){
+	var engPhrase = input.value;
+	var hinPhrase = output.textContent;
+	xhr = saveRequest(engPhrase,hinPhrase);
+	input.value = "";
+	output.textContent = "";	
 });
 
 orscFunction = function(){
