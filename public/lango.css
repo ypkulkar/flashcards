@@ -1,6 +1,10 @@
 body{
     display: flex;
     justify-content: center;
+	background-color: pink;
+}
+.card{
+	background-color: yellow;
 }
 
 #welcome{

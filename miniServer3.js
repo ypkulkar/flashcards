@@ -40,6 +40,7 @@ function storeCard(req, res, next) {
 			}
 			// get the last insert id
 			console.log(`A row has been inserted with rowid ${this.lastID}`);
+			res.end();
 		  });
 			}
     else {

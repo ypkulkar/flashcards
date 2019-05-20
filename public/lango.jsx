@@ -1,7 +1,4 @@
 'use strict'
-import React from 'react'
-import ReactDOM from 'react-dom'
-
 function Card(props) {
     return <div className="textCard">
     	   {props.children}
@@ -28,10 +25,12 @@ class CreateCardMain extends React.Component {
 
   render() {return (
       <main>
-      <Card>
- 	<textarea id="inputEng" onKeyPress={this.checkReturn} />
+      <Card class="card">
+ 	<textarea id="inputEng"  onKeyPress={this.checkReturn} />
       </Card>
-      <Card>
+      
+
+      <Card class="card">
  	<Txt phrase={this.state.opinion} /> 
       </Card>
       </main>

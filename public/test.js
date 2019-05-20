@@ -8,13 +8,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 function Card(props) {
     return React.createElement(
-        'div',
-        { className: 'textCard' },
+        "div",
+        { className: "textCard" },
         props.children
     );
 }
@@ -22,13 +19,13 @@ function Card(props) {
 function Txt(props) {
     if (props.phrase == undefined) {
         return React.createElement(
-            'p',
-            null,
-            'Text missing'
+            "p",
+            { style: "font-size:40px;" },
+            "Text missing"
         );
     } else return React.createElement(
-        'p',
-        null,
+        "p",
+        { style: "font-size:40px;" },
         props.phrase
     );
 }
@@ -48,19 +45,19 @@ var CreateCardMain = function (_React$Component) {
     }
 
     _createClass(CreateCardMain, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'main',
+                "main",
                 null,
                 React.createElement(
                     Card,
-                    null,
-                    React.createElement('textarea', { id: 'inputEng', onKeyPress: this.checkReturn })
+                    { "class": "card" },
+                    React.createElement("textarea", { id: "inputEng", onKeyPress: this.checkReturn })
                 ),
                 React.createElement(
                     Card,
-                    null,
+                    { "class": "card" },
                     React.createElement(Txt, { phrase: this.state.opinion })
                 )
             );
@@ -70,7 +67,7 @@ var CreateCardMain = function (_React$Component) {
         // When the charCode is 13, the user has hit the return key
 
     }, {
-        key: 'checkReturn',
+        key: "checkReturn",
         value: function checkReturn(event) {
             if (event.charCode == 13) {
                 var newPhrase = document.getElementById("inputEng").value;
