@@ -12,11 +12,11 @@ const db = new sqlite3.Database(dbFileName, (err) => {
 });
 
 cmdStr = 'SELECT * FROM Flashcards';
-db.get(cmdStr, function(err, rowData) {
+db.all(cmdStr, function(err, rowData) {
     if (err) {
       return console.log(err.message);
     }
     // get the last insert id
-    console.log("got: ", rowData, "\n");
+  console.log("got: ", rowData, "\n");
   });
 

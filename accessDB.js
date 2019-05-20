@@ -12,7 +12,7 @@ const db = new sqlite3.Database(dbFileName, (err) => {
 });
 
 cmdStr = 'INSERT INTO Flashcards(user, english, hindi, seen, correct) VALUES(1,@0,@1,0,0)';
-db.run(cmdStr, "english phrase", "hindi translation", function(err) {
+db.run(cmdStr, "hi yash", "hi yash in hindi", function(err) {
     if (err) {
       return console.log(err.message);
     }
