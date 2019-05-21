@@ -1,58 +1,73 @@
 textarea{
     resize: none;
-    
+    width: 98%;
+    height: 97%;    
+    border: none;
+    font-style: helvetica;
 }
 
 body{
     display: flex;
     justify-content: center;
-    background-color: pink;
 }
 
 main{
     display: flex;
-    background-color: blue; 
-}
-
-#translation{
-    font-size: 32px;
-
-}
-
-.textCard{
-    background-color: yellow;
-}
-
-#welcome{
-    background-color: yellow;
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
+    width: 100vw;
     height: 100vh;
-    align-items: center;
-    justify-content: center;
-}
-
-#signin{
-    background-color: lightgreen;
-    flex: 1 1 auto;
-    height: 100vh;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  
 }
 
-#signin > input {
-    margin-top: 5vh;
-    width: 50%;
+.header{
+    display: flex;
 }
 
 button{
     background-color: green;
     color: rgb(210,219,226);
     border: none;
-    margin-top: 5vh;
-    width: 18vw;
+    width: 100px;
     font-size: 11pt;
+    position: absolute;
 }
+
+#title{
+    //margin-right: 40vw;
+    font-size: 32px;
+    text-align: center;
+    width: 100vw;
+    position: relative;
+}
+
+#middle{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+#translation{
+    //font-size: 16pt;
+}
+
+.textCard{
+    margin: 5px;
+    width: 300px;
+    height: 200px;
+    align-self: center;
+    border: 2px solid grey;
+    font-size: 16pt;
+    font-style: helvetica;
+}
+
+.footer{
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    background-color: blue;
+}
+
+#username{
+    font-size: 24pt;
+}
+

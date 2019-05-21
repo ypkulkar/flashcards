@@ -1,4 +1,17 @@
 'use strict'
+
+function Header(props) {
+    return <div className="header">
+    	   {props.children}
+        </div>;
+    }
+
+function Footer(props) {
+    return <div className="footer">
+    	   {props.children}
+        </div>;
+    }
+
 function Card(props) {
     return <div className="textCard">
     	   {props.children}
@@ -25,6 +38,11 @@ class CreateCardMain extends React.Component {
 
   render() {return (
       <main>
+      <Header>
+            <p id="title">Lango!</p>
+            <button id="review">Review</button>
+      </Header>
+      <div id="middle">
       <Card>
  	<textarea id="inputEng"  onKeyPress={this.checkReturn} />
       </Card>
@@ -32,6 +50,10 @@ class CreateCardMain extends React.Component {
       <Card>
  	<Txt phrase={this.state.opinion} /> 
       </Card>
+      </div>
+      <Footer>
+           <p id="username">Username</p>
+      </Footer>
       </main>
       );
     } // end of render function 

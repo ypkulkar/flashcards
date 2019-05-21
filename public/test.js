@@ -8,6 +8,22 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function Header(props) {
+    return React.createElement(
+        "div",
+        { className: "header" },
+        props.children
+    );
+}
+
+function Footer(props) {
+    return React.createElement(
+        "div",
+        { className: "footer" },
+        props.children
+    );
+}
+
 function Card(props) {
     return React.createElement(
         "div",
@@ -51,14 +67,41 @@ var CreateCardMain = function (_React$Component) {
                 "main",
                 null,
                 React.createElement(
-                    Card,
-                    { className: "card" },
-                    React.createElement("textarea", { id: "inputEng", onKeyPress: this.checkReturn })
+                    Header,
+                    null,
+                    React.createElement(
+                        "p",
+                        { id: "title" },
+                        "Lango!"
+                    ),
+                    React.createElement(
+                        "button",
+                        { id: "review" },
+                        "Review"
+                    )
                 ),
                 React.createElement(
-                    Card,
-                    { className: "card" },
-                    React.createElement(Txt, { phrase: this.state.opinion })
+                    "div",
+                    { id: "middle" },
+                    React.createElement(
+                        Card,
+                        null,
+                        React.createElement("textarea", { id: "inputEng", onKeyPress: this.checkReturn })
+                    ),
+                    React.createElement(
+                        Card,
+                        null,
+                        React.createElement(Txt, { phrase: this.state.opinion })
+                    )
+                ),
+                React.createElement(
+                    Footer,
+                    null,
+                    React.createElement(
+                        "p",
+                        { id: "username" },
+                        "Username"
+                    )
                 )
             );
         } // end of render function 
