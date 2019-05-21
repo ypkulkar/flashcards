@@ -92,6 +92,15 @@ var CreateCardMain = function (_React$Component) {
                         Card,
                         null,
                         React.createElement(Txt, { phrase: this.state.opinion })
+                    ),
+                    React.createElement(
+                        "div",
+                        { id: "buttonbox" },
+                        React.createElement(
+                            "button",
+                            { id: "save" },
+                            "Save"
+                        )
                     )
                 ),
                 React.createElement(

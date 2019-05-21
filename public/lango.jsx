@@ -50,6 +50,9 @@ class CreateCardMain extends React.Component {
       <Card>
  	<Txt phrase={this.state.opinion} /> 
       </Card>
+      <div id="buttonbox">
+          <button id="save">Save</button>
+      </div>
       </div>
       <Footer>
            <p id="username">Username</p>
