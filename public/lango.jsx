@@ -8,9 +8,9 @@ function Card(props) {
 
 function Txt(props) {
 	 if (props.phrase == undefined) {
-	    return <p>Text missing</p>;
+	    return <p id="translation">Text missing</p>;
 	    }
-	 else return <p>{props.phrase}</p>;
+	 else return <p id="translation">{props.phrase}</p>;
 	 }
 
 
@@ -25,12 +25,11 @@ class CreateCardMain extends React.Component {
 
   render() {return (
       <main>
-      <Card class="card">
+      <Card>
  	<textarea id="inputEng"  onKeyPress={this.checkReturn} />
       </Card>
       
-
-      <Card class="card">
+      <Card>
  	<Txt phrase={this.state.opinion} /> 
       </Card>
       </main>

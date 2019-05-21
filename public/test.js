@@ -20,12 +20,12 @@ function Txt(props) {
     if (props.phrase == undefined) {
         return React.createElement(
             "p",
-            null,
+            { id: "translation" },
             "Text missing"
         );
     } else return React.createElement(
         "p",
-        null,
+        { id: "translation" },
         props.phrase
     );
 }
@@ -52,12 +52,12 @@ var CreateCardMain = function (_React$Component) {
                 null,
                 React.createElement(
                     Card,
-                    { "class": "card" },
+                    { className: "card" },
                     React.createElement("textarea", { id: "inputEng", onKeyPress: this.checkReturn })
                 ),
                 React.createElement(
                     Card,
-                    { "class": "card" },
+                    { className: "card" },
                     React.createElement(Txt, { phrase: this.state.opinion })
                 )
             );

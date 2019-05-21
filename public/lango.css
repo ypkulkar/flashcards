@@ -1,5 +1,6 @@
 textarea{
     resize: none;
+    
 }
 
 body{
@@ -13,8 +14,13 @@ main{
     background-color: blue; 
 }
 
-.card{
-	background-color: yellow;
+#translation{
+    font-size: 32px;
+
+}
+
+.textCard{
+    background-color: yellow;
 }
 
 #welcome{
