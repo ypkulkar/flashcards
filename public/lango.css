@@ -5,8 +5,14 @@ textarea{
 body{
     display: flex;
     justify-content: center;
-	background-color: pink;
+    background-color: pink;
 }
+
+main{
+    display: flex;
+    background-color: blue; 
+}
+
 .card{
 	background-color: yellow;
 }

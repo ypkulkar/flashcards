@@ -1,5 +1,5 @@
 const express = require('express')
-const port = 52560; 
+const port = 59681; 
 const sqlite3 = require("sqlite3").verbose();  // use sqlite
 const fs = require("fs"); // file system
 const dbFileName = "Flashcards.db";
