@@ -9,126 +9,172 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function Header(props) {
-    return React.createElement(
-        "div",
-        { className: "header" },
-        props.children
-    );
+	return React.createElement(
+		"div",
+		{ className: "header" },
+		props.children
+	);
 }
 
 function Footer(props) {
-    return React.createElement(
-        "div",
-        { className: "footer" },
-        props.children
-    );
+	return React.createElement(
+		"div",
+		{ className: "footer" },
+		props.children
+	);
 }
 
 function Card(props) {
-    return React.createElement(
-        "div",
-        { className: "textCard" },
-        props.children
-    );
+	return React.createElement(
+		"div",
+		{ className: "textCard" },
+		props.children
+	);
 }
 
 function Txt(props) {
-    if (props.phrase == undefined) {
-        return React.createElement(
-            "p",
-            { id: "translation" },
-            "Text missing"
-        );
-    } else return React.createElement(
-        "p",
-        { id: "translation" },
-        props.phrase
-    );
+	if (props.phrase == undefined) {
+		return React.createElement(
+			"p",
+			{ id: "translation" },
+			"Text missing"
+		);
+	} else return React.createElement(
+		"p",
+		{ id: "translation" },
+		props.phrase
+	);
 }
 
 var CreateCardMain = function (_React$Component) {
-    _inherits(CreateCardMain, _React$Component);
+	_inherits(CreateCardMain, _React$Component);
 
-    function CreateCardMain(props) {
-        _classCallCheck(this, CreateCardMain);
+	function CreateCardMain(props) {
+		_classCallCheck(this, CreateCardMain);
 
-        var _this = _possibleConstructorReturn(this, (CreateCardMain.__proto__ || Object.getPrototypeOf(CreateCardMain)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (CreateCardMain.__proto__ || Object.getPrototypeOf(CreateCardMain)).call(this, props));
 
-        _this.state = { opinion: "Life is a bowl of cherries" };
+		_this.state = { opinion: "Life is a bowl of cherries" };
 
-        _this.checkReturn = _this.checkReturn.bind(_this);
-        return _this;
-    }
+		_this.checkReturn = _this.checkReturn.bind(_this);
+		_this.saveFunc = _this.saveFunc.bind(_this);
+		//this.orscFunction = this.orscFunction.bind(this);
+		return _this;
+	}
 
-    _createClass(CreateCardMain, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "main",
-                null,
-                React.createElement(
-                    Header,
-                    null,
-                    React.createElement(
-                        "p",
-                        { id: "title" },
-                        "Lango!"
-                    ),
-                    React.createElement(
-                        "button",
-                        { id: "review" },
-                        "Review"
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { id: "middle" },
-                    React.createElement(
-                        Card,
-                        null,
-                        React.createElement("textarea", { id: "inputEng", onKeyPress: this.checkReturn })
-                    ),
-                    React.createElement(
-                        Card,
-                        null,
-                        React.createElement(Txt, { phrase: this.state.opinion })
-                    ),
-                    React.createElement(
-                        "div",
-                        { id: "buttonbox" },
-                        React.createElement(
-                            "button",
-                            { id: "save" },
-                            "Save"
-                        )
-                    )
-                ),
-                React.createElement(
-                    Footer,
-                    null,
-                    React.createElement(
-                        "p",
-                        { id: "username" },
-                        "Username"
-                    )
-                )
-            );
-        } // end of render function 
+	_createClass(CreateCardMain, [{
+		key: "render",
+		value: function render() {
+			return React.createElement(
+				"main",
+				null,
+				React.createElement(
+					Header,
+					null,
+					React.createElement(
+						"p",
+						{ id: "title" },
+						"Lango!"
+					),
+					React.createElement(
+						"button",
+						{ id: "review" },
+						"Review"
+					)
+				),
+				React.createElement(
+					"div",
+					{ id: "middle" },
+					React.createElement(
+						Card,
+						null,
+						React.createElement("textarea", { id: "inputEng", onKeyPress: this.checkReturn })
+					),
+					React.createElement(
+						Card,
+						null,
+						React.createElement(Txt, { id: "outputEng", phrase: this.state.opinion })
+					),
+					React.createElement(
+						"div",
+						{ id: "buttonbox" },
+						React.createElement(
+							"button",
+							{ id: "save", onClick: this.saveFunc },
+							"Save"
+						)
+					)
+				),
+				React.createElement(
+					Footer,
+					null,
+					React.createElement(
+						"p",
+						{ id: "username" },
+						"Username"
+					)
+				)
+			);
+		} // end of render function 
 
-        // onKeyPress function for the textarea element
-        // When the charCode is 13, the user has hit the return key
+		// onKeyPress function for the textarea element
+		// When the charCode is 13, the user has hit the return key
 
-    }, {
-        key: "checkReturn",
-        value: function checkReturn(event) {
-            if (event.charCode == 13) {
-                var newPhrase = document.getElementById("inputEng").value;
-                this.setState({ opinion: newPhrase });
-            }
-        }
-    }]);
+	}, {
+		key: "checkReturn",
+		value: function checkReturn(event) {
+			if (event.charCode == 13) {
+				var newPhrase = document.getElementById("inputEng").value;
+				var xhr = translateRequest(newPhrase);
+				var that = this;
+				xhr.onreadystatechange = function () {
 
-    return CreateCardMain;
+					console.log("Ready state change");
+					if (xhr.readyState == 4) {
+						if (xhr.status == 200) {
+							var object = JSON.parse(xhr.responseText);
+							//output.textContent = object.translation;
+							console.log(object.translation);
+							that.setState({ opinion: object.translation });
+						}
+
+						if (xhr.status == 404) {
+							console.log("Error 404: your life is fucked");
+						}
+					}
+				};
+				// Get the translated phrase into translated_phrase
+				//this.setState({opinion: translated_phrase} );
+			}
+		}
+		/*
+  	orscFunction(){
+  	
+  			console.log("Ready state change");
+  			if(xhr.readyState == 4){
+  				if(xhr.status == 200){
+  					let object = JSON.parse(xhr.responseText);
+  					//output.textContent = object.translation;
+  					console.log(object.translation);	
+  					this.setState({opinion: object.translation});
+  				}
+  				
+  				if(xhr.status == 404){
+  					console.log("Error 404: your life is fucked")
+  				}
+  			}
+  	}
+  */
+
+	}, {
+		key: "saveFunc",
+		value: function saveFunc(event) {
+			var engPhrase = document.getElementById("inputEng").value;
+			saveRequest(engPhrase, this.state.opinion);
+		}
+	}]);
+
+	return CreateCardMain;
 }(React.Component); // end of class
 
 

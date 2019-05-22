@@ -34,6 +34,8 @@ class CreateCardMain extends React.Component {
       this.state = { opinion: "Life is a bowl of cherries" }
 
       this.checkReturn = this.checkReturn.bind(this);
+	  this.saveFunc = this.saveFunc.bind(this);
+	  //this.orscFunction = this.orscFunction.bind(this);
       }
 
   render() {return (
@@ -48,10 +50,10 @@ class CreateCardMain extends React.Component {
       </Card>
       
       <Card>
- 	<Txt phrase={this.state.opinion} /> 
+ 	<Txt id="outputEng" phrase={this.state.opinion} /> 
       </Card>
       <div id="buttonbox">
-          <button id="save">Save</button>
+          <button id="save" onClick={this.saveFunc}>Save</button>
       </div>
       </div>
       <Footer>
@@ -66,9 +68,50 @@ class CreateCardMain extends React.Component {
     checkReturn(event) {
 	 if (event.charCode == 13) {
 	    let newPhrase = document.getElementById("inputEng").value;
-	    this.setState({opinion: newPhrase} );
+		let xhr = translateRequest(newPhrase);
+		var that = this;
+		xhr.onreadystatechange = function(){
+
+			console.log("Ready state change");
+			if(xhr.readyState == 4){
+				if(xhr.status == 200){
+					let object = JSON.parse(xhr.responseText);
+					//output.textContent = object.translation;
+					console.log(object.translation);	
+					that.setState({opinion: object.translation});
+				}
+				
+				if(xhr.status == 404){
+					console.log("Error 404: your life is fucked")
+				}
+			}
+		};
+		// Get the translated phrase into translated_phrase
+	    //this.setState({opinion: translated_phrase} );
 	    }
 	 }
+/*
+	orscFunction(){
+	
+			console.log("Ready state change");
+			if(xhr.readyState == 4){
+				if(xhr.status == 200){
+					let object = JSON.parse(xhr.responseText);
+					//output.textContent = object.translation;
+					console.log(object.translation);	
+					this.setState({opinion: object.translation});
+				}
+				
+				if(xhr.status == 404){
+					console.log("Error 404: your life is fucked")
+				}
+			}
+	}
+*/
+	saveFunc(event){
+		let engPhrase = document.getElementById("inputEng").value;
+		saveRequest(engPhrase,this.state.opinion);
+	}
 
 
   } // end of class
