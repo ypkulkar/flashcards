@@ -123,7 +123,7 @@ var CreateCardMain = function (_React$Component) {
     value: function checkReturn(event) {
       if (event.charCode == 13) {
         var newPhrase = document.getElementById("inputEng").value;
-        document.getElementById("inputEng").value = newPhrase.slice(0, -2);
+        document.getElementById("inputEng").value = newPhrase.slice(0, newPhrase.length);
         var xhr = translateRequest(newPhrase);
         var that = this;
         xhr.onreadystatechange = function () {
@@ -139,6 +139,7 @@ var CreateCardMain = function (_React$Component) {
             }
           }
         };
+        event.preventDefault();
       }
     }
   }, {

@@ -44,7 +44,7 @@ class CreateCardMain extends React.Component {
       </Header>
       <div id="middle">
       <Card>
- 	<textarea id="inputEng"  onKeyPress={this.checkReturn} />
+ 	<textarea id="inputEng" onKeyPress={this.checkReturn} />
       </Card>
       
       <Card>
@@ -66,7 +66,7 @@ class CreateCardMain extends React.Component {
     checkReturn(event) {
 	 if (event.charCode == 13) {
 	    let newPhrase = document.getElementById("inputEng").value;
-		document.getElementById("inputEng").value = newPhrase.slice(0,-2);
+		document.getElementById("inputEng").value = newPhrase.slice(0, newPhrase.length);
 		let xhr = translateRequest(newPhrase);
 		var that = this;
 		xhr.onreadystatechange = function(){
@@ -82,6 +82,7 @@ class CreateCardMain extends React.Component {
 				}
 			}
 		};
+		event.preventDefault();
 	    }
 	 }
 
