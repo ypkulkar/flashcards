@@ -31,11 +31,9 @@ class CreateCardMain extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { opinion: "Life is a bowl of cherries" }
-
+      this.state = { opinion: "" }
       this.checkReturn = this.checkReturn.bind(this);
 	  this.saveFunc = this.saveFunc.bind(this);
-	  //this.orscFunction = this.orscFunction.bind(this);
       }
 
   render() {return (
@@ -68,49 +66,33 @@ class CreateCardMain extends React.Component {
     checkReturn(event) {
 	 if (event.charCode == 13) {
 	    let newPhrase = document.getElementById("inputEng").value;
+		document.getElementById("inputEng").value = newPhrase.slice(0,-2);
 		let xhr = translateRequest(newPhrase);
 		var that = this;
 		xhr.onreadystatechange = function(){
 
-			console.log("Ready state change");
 			if(xhr.readyState == 4){
 				if(xhr.status == 200){
 					let object = JSON.parse(xhr.responseText);
-					//output.textContent = object.translation;
-					console.log(object.translation);	
 					that.setState({opinion: object.translation});
 				}
 				
 				if(xhr.status == 404){
-					console.log("Error 404: your life is fucked")
+					console.log("Error 404: File not found")
 				}
 			}
 		};
-		// Get the translated phrase into translated_phrase
-	    //this.setState({opinion: translated_phrase} );
 	    }
 	 }
-/*
-	orscFunction(){
-	
-			console.log("Ready state change");
-			if(xhr.readyState == 4){
-				if(xhr.status == 200){
-					let object = JSON.parse(xhr.responseText);
-					//output.textContent = object.translation;
-					console.log(object.translation);	
-					this.setState({opinion: object.translation});
-				}
-				
-				if(xhr.status == 404){
-					console.log("Error 404: your life is fucked")
-				}
-			}
-	}
-*/
+
 	saveFunc(event){
-		let engPhrase = document.getElementById("inputEng").value;
-		saveRequest(engPhrase,this.state.opinion);
+		let engPhrase = document.getElementById("inputEng");
+		if(engPhrase.value == "" || this.state.opinion == ""){
+			return;	
+		}
+		saveRequest(engPhrase.value,this.state.opinion);
+		engPhrase.value = "";
+		this.setState({opinion: ""});
 	}
 
 

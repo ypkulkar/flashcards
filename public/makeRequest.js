@@ -8,7 +8,6 @@ function createRequest(method, url) {
 }
 
 function saveRequest(engPhrase, hinPhrase){
-  //let url = `store?engPhrase=${engPhrase}&hinPhrase=${hinPhrase}`;
   let url = `store?engPhrase=${engPhrase}&hinPhrase=${hinPhrase}`;
   let xhr = createRequest('POST', url);
   return makeRequest(xhr);
@@ -34,10 +33,6 @@ function makeRequest(xhr) {
 
   // Load some functions into response handlers.
   xhr.onload = function() {
-      //console.log(xhr);
-      //let responseStr = xhr.response;  // get the JSON string 
-      //let object = JSON.parse(responseStr);  // turn it into an object
-      //console.log(JSON.stringify(object, undefined, 2));  // print it out as a string, nicely formatted
   };
 
   xhr.onerror = function() {
