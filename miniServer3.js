@@ -14,7 +14,6 @@ const db = new sqlite3.Database(dbFileName, (err) => {
 function queryHandler(req, res, next) {
     let url = req.url;
     let qObj = req.query;
-    console.log(qObj);
     if (qObj.phrase != undefined) {
         let temp = qObj.phrase;
 		get_translation(temp,res);
@@ -27,9 +26,6 @@ function queryHandler(req, res, next) {
 function storeCard(req, res, next) {
 	let sObj = req.query;
         let url = req.url;
-	console.log(url);
-	console.log("req = "+req);
-    console.log(sObj);
 	if (sObj.engPhrase != undefined && sObj.hinPhrase != undefined) {
 		let engPhrase = sObj.engPhrase;
 		let hinPhrase = sObj.hinPhrase;
@@ -75,8 +71,6 @@ function get_translation(instring,res){
 		const APIkey = "AIzaSyDZJDlLpGWdRPQKVpmWLlFtGc-eh4QDpp4";  // ADD API KEY HERE
 		const url = "https://translation.googleapis.com/language/translate/v2?key="+APIkey
 
-//		instring = "Hello Kirsten";
-
 		// An object containing the data expressing the query to the
 		// translate API. 
 		// Below, gets stringified and put into the body of an HTTP PUT request.
@@ -90,8 +84,6 @@ function get_translation(instring,res){
 			}
 
 		console.log("English phrase: ", requestObject.q[0]);
-		
-		
 				
 		// The call that makes a request to the API
 		// Uses the Node request module, which packs up and sends off
@@ -109,12 +101,9 @@ function get_translation(instring,res){
 
 			// callback function, called when data is received from API
 			function APIcallback(err, APIresHead, APIresBody) {
-			console.log("in the callback function");
 			// gets three objects as input
 			if ((err) || (APIresHead.statusCode != 200)) {
 				// API is not working
-				//console.log("Got API error");
-				//console.log(APIresBody);
 			} else {
 				if (APIresHead.error) {
 				// API worked but is not giving you data
@@ -122,15 +111,11 @@ function get_translation(instring,res){
 				} else {
 				console.log("In Hindi: ", 
 					APIresBody.data.translations[0].translatedText);
-				//res.json({ "translation": APIresBody.data.translations[0].translatedText} );
-				//console.log("\n\nJSON was:");
-				//console.log(JSON.stringify(APIresBody, undefined, 2));
 				// print it out as a string, nicely formatted
 				res.json( {"translation":APIresBody.data.translations[0].translatedText});
 				}
 			}
 		} // end callback function
 
-	console.log("made the request");
 }
 
