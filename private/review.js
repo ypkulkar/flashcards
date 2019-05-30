@@ -56,6 +56,7 @@ var CreateCardMain = function (_React$Component) {
 
         _this.state = { engPhrase: "", hinPhrase: "" };
         _this.nextFunc = _this.nextFunc.bind(_this);
+        _this.onload_Func = _this.onload_Func.bind(_this);
         return _this;
     }
 
@@ -74,8 +75,8 @@ var CreateCardMain = function (_React$Component) {
                         "Lango!"
                     ),
                     React.createElement(
-                        "button",
-                        { id: "add", className: "upper_buttons" },
+                        "a",
+                        { id: "add", className: "upper_buttons", href: "lango.html" },
                         "Add"
                     )
                 ),
@@ -120,15 +121,16 @@ var CreateCardMain = function (_React$Component) {
         value: function nextFunc(event) {
 
             console.log("In the next function\n");
-            /*
-            		let engPhrase = document.getElementById("inputEng");
-            		if(engPhrase.value == "" || this.state.opinion == ""){
-            			return;	
-            		}
-            		saveRequest(engPhrase.value,this.state.opinion);
-            		engPhrase.value = "";
-            		this.setState({opinion: ""});
-            */
+
+            var xhr = reviewRequest();
+            xhr.onload = this.onload_Func;
+        }
+    }, {
+        key: "onload_Func",
+        value: function onload_Func(event) {
+            console.log(event.target);
+            var object = JSON.parse(event.target.responseText);
+            this.setState({ engPhrase: object.engPhrase, hinPhrase: object.hinPhrase });
         }
     }]);
 

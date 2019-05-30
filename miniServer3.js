@@ -50,7 +50,7 @@ function queryHandler(req, res, next) {
 
 function storeCard(req, res, next) {
 	let sObj = req.query;
-        let url = req.url;
+	let url = req.url;
 	if (sObj.engPhrase != undefined && sObj.hinPhrase != undefined) {
 		let engPhrase = sObj.engPhrase;
 		let hinPhrase = sObj.hinPhrase;
@@ -69,6 +69,31 @@ function storeCard(req, res, next) {
     else {
 		next();
     }
+}
+
+
+function reviewCard(req, res, next) {
+	let sObj = req.query;
+	let url = req.url;
+	let userID = req.session.passport.user;
+	if(userID != undefined){
+	cmdStr = 'SELECT * FROM Flashcards'; // WHERE user=\'' + userID + "\'";
+	console.log(cmdStr);
+    	db.all(cmdStr, function(err, rowData) {
+			if (err) {
+			  return console.log(err.message);
+			}
+			console.log("grabbed a card");
+			console.log(rowData[0]);
+			//TODO: change from returning first card to analyzing 
+			//for which ones have been seen least, etc
+			res.json( {"engPhrase":rowData[0].english, "hinPhrase":rowData[0].hindi});
+			res.end();
+		});
+	}else{
+		next();
+	}
+
 }
 
 function fileNotFound(req, res) {
@@ -101,6 +126,7 @@ app.use(passport.session());
 
 app.get('/query', queryHandler );   // if not, is it a valid query?
 app.post('/store', storeCard);	    // is it a valid request to store a card?
+app.get('/card', reviewCard);
 
 // Public static files
 app.get('/*',express.static('public'));
@@ -134,7 +160,7 @@ app.get('/auth/redirect',
 	// ...with a cookie in it for the Browser! 
 	function (req, res) {
 	    console.log('Logged in and using cookies!')
-	    res.redirect('/user/hello.html');
+	    res.redirect('/lango.html');
 	});
 
 // static files in /user are only available after login

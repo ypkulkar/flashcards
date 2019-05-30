@@ -33,7 +33,7 @@ main{
 }
 
 button{
-	outline: none;
+    outline: none;
     border: none;
     padding-left: 50px;
     padding-right: 50px;
@@ -48,6 +48,18 @@ button{
     position: absolute;
     top: 25px;
     left: 25px;
+    color: white;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 12px;
+    height: 30px;
+    font-size: 14pt;
+    border-radius: 10px;
+    text-decoration: none;
+    
 }
 
 #buttonbox{

@@ -75,8 +75,8 @@ var CreateCardMain = function (_React$Component) {
             "Lango!"
           ),
           React.createElement(
-            "button",
-            { id: "review", className: "upper_buttons" },
+            "a",
+            { id: "review", className: "upper_buttons", href: "review.html" },
             "Review"
           )
         ),

@@ -40,7 +40,7 @@ class CreateCardMain extends React.Component {
       <main>
       <Header>
             <p id="title">Lango!</p>
-            <button id="review" className="upper_buttons">Review</button>
+            <a id="review" className="upper_buttons" href="review.html">Review</a>
       </Header>
       <div id="middle">
       <Card>
@@ -95,8 +95,7 @@ class CreateCardMain extends React.Component {
 		engPhrase.value = "";
 		this.setState({opinion: ""});
 	}
-
-
+	
   } // end of class
 
 

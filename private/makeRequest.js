@@ -13,6 +13,12 @@ function saveRequest(engPhrase, hinPhrase){
   return makeRequest(xhr);
 }
 
+function reviewRequest(){
+  let url = 'card';
+  let xhr = createRequest('GET', url);
+  return makeRequest(xhr);
+}
+
 function translateRequest(phrase){
   let url = `query?phrase=${phrase}`;
   let xhr = createRequest('GET', url);

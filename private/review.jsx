@@ -33,13 +33,14 @@ class CreateCardMain extends React.Component {
       super(props);
       this.state = { engPhrase: "", hinPhrase: "" };
 	  this.nextFunc = this.nextFunc.bind(this);
+	  this.onload_Func= this.onload_Func.bind(this);
   }
 
   render() {return (
       <main>
       <Header>
             <p id="title">Lango!</p>
-            <button id="add" className="upper_buttons">Add</button>
+            <a id="add" className="upper_buttons" href="lango.html">Add</a>
       </Header>
       <div id="middle">
       <Card>
@@ -64,17 +65,17 @@ class CreateCardMain extends React.Component {
 	nextFunc(event){
 
 		console.log("In the next function\n");
-/*
-		let engPhrase = document.getElementById("inputEng");
-		if(engPhrase.value == "" || this.state.opinion == ""){
-			return;	
-		}
-		saveRequest(engPhrase.value,this.state.opinion);
-		engPhrase.value = "";
-		this.setState({opinion: ""});
-*/
+		
+		var xhr = reviewRequest();
+		xhr.onload = this.onload_Func;
+
 	}
 
+	onload_Func(event){
+		console.log(event.target);
+		let object = JSON.parse(event.target.responseText);
+		this.setState({engPhrase: object.engPhrase, hinPhrase: object.hinPhrase});		
+	}
 
   } // end of class
 
