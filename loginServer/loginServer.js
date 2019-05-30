@@ -5,6 +5,7 @@ const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20');
 const sqlite = require('sqlite3');
 
+const port = 52560;
 
 // Google login credentials, used when the user contacts
 // Google, to tell them where he is trying to login to, and show
@@ -13,8 +14,8 @@ const sqlite = require('sqlite3');
 // information, packed into a redirect response that redirects to
 // server162.site:[port]/auth/redirect
 const googleLoginData = {
-    clientID: '472036695689-s9n5kubr2kuqftbvk0ujl67i324njo3p.apps.googleusercontent.com',
-    clientSecret: 'W-edC3ifbkX9nxSDoNheWPca',
+    clientID: '708936518102-rjc3et58gb6ldrvhmf4p3vee772tio4o.apps.googleusercontent.com',
+    clientSecret: '6_1YCZuWJEYG19_YXkXAfIL8',
     callbackURL: '/auth/redirect'
 };
 
@@ -100,7 +101,7 @@ app.get('/query', function (req, res) { res.send('HTTP query!') });
 app.use( fileNotFound );
 
 // Pipeline is ready. Start listening!  
-app.listen(30057, function (){console.log('Listening...');} );
+app.listen(port, function (){console.log('Listening...');} );
 
 
 // middleware functions
