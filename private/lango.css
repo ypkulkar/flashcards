@@ -43,7 +43,7 @@ button{
     color: white;
 }
 
-#review{
+.upper_buttons{
     background-color: blue;
     position: absolute;
     top: 25px;
@@ -57,7 +57,15 @@ button{
     height: auto;
 }
 
+.lower_buttons{
+	background-color: green;
+}
+
 #save{
+    background-color: green; 
+}
+
+#next{
     background-color: green; 
 }
 

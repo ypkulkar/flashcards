@@ -31,27 +31,26 @@ class CreateCardMain extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { opinion: "" }
-      this.checkReturn = this.checkReturn.bind(this);
-	  this.saveFunc = this.saveFunc.bind(this);
-      }
+      this.state = { engPhrase: "", hinPhrase: "" };
+	  this.nextFunc = this.nextFunc.bind(this);
+  }
 
   render() {return (
       <main>
       <Header>
             <p id="title">Lango!</p>
-            <button id="review">Review</button>
+            <button id="add" className="upper_buttons">Add</button>
       </Header>
       <div id="middle">
       <Card>
- 	<textarea id="inputEng" onKeyPress={this.checkReturn} />
+ 	<Txt id="inputEng" phrase={this.state.engPhrase}  />
       </Card>
       
       <Card>
- 	<Txt id="outputEng" phrase={this.state.opinion} /> 
+ 	<Txt id="outputEng" phrase={this.state.hinPhrase} /> 
       </Card>
       <div id="buttonbox">
-          <button id="save" onClick={this.saveFunc}>Save</button>
+          <button id="next" className = "lower_buttons" onClick={this.nextFunc}>Next</button>
       </div>
       </div>
       <Footer>
@@ -61,32 +60,11 @@ class CreateCardMain extends React.Component {
       );
     } // end of render function 
 
-    // onKeyPress function for the textarea element
-    // When the charCode is 13, the user has hit the return key
-    checkReturn(event) {
-	 if (event.charCode == 13) {
-	    let newPhrase = document.getElementById("inputEng").value;
-		document.getElementById("inputEng").value = newPhrase.slice(0, newPhrase.length);
-		let xhr = translateRequest(newPhrase);
-		var that = this;
-		xhr.onreadystatechange = function(){
 
-			if(xhr.readyState == 4){
-				if(xhr.status == 200){
-					let object = JSON.parse(xhr.responseText);
-					that.setState({opinion: object.translation});
-				}
-				
-				if(xhr.status == 404){
-					console.log("Error 404: File not found")
-				}
-			}
-		};
-		event.preventDefault();
-	    }
-	 }
+	nextFunc(event){
 
-	saveFunc(event){
+		console.log("In the next function\n");
+/*
 		let engPhrase = document.getElementById("inputEng");
 		if(engPhrase.value == "" || this.state.opinion == ""){
 			return;	
@@ -94,17 +72,13 @@ class CreateCardMain extends React.Component {
 		saveRequest(engPhrase.value,this.state.opinion);
 		engPhrase.value = "";
 		this.setState({opinion: ""});
+*/
 	}
 
 
   } // end of class
 
-
-
 ReactDOM.render(
     <CreateCardMain />,
     document.getElementById('root')
 );
-
-
-	 
