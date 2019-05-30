@@ -82,8 +82,6 @@ function fileNotFound(req, res) {
 // put together the server pipeline
 const app = express()
 //app.use(express.static('public'));  // can I find a static file? 
-app.get('/query', queryHandler );   // if not, is it a valid query?
-app.post('/store', storeCard);	    // is it a valid request to store a card?
 
 // Check validity of cookies at the beginning of pipeline
 // Will get cookies out of request, decrypt and check if 
@@ -100,6 +98,9 @@ app.use(passport.initialize());
 
 // If there is a valid cookie, will call deserializeUser()
 app.use(passport.session()); 
+
+app.get('/query', queryHandler );   // if not, is it a valid query?
+app.post('/store', storeCard);	    // is it a valid request to store a card?
 
 // Public static files
 app.get('/*',express.static('public'));
