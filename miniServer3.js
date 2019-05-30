@@ -57,7 +57,7 @@ function storeCard(req, res, next) {
 		cmdStr = 'INSERT INTO Flashcards(user, english, hindi, seen, correct) VALUES(@0,@1,@2,0,0)';
 		console.log(req.session);
 		console.log(req.user);
-		db.run(cmdStr, req.user_id, engPhrase, hinPhrase, function(err) {
+		db.run(cmdStr, req.session.passport.user, engPhrase, hinPhrase, function(err) {
 			if (err) {
 			  return console.log(err.message);
 			}
