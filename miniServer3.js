@@ -55,7 +55,9 @@ function storeCard(req, res, next) {
 		let engPhrase = sObj.engPhrase;
 		let hinPhrase = sObj.hinPhrase;
 		cmdStr = 'INSERT INTO Flashcards(user, english, hindi, seen, correct) VALUES(@0,@1,@2,0,0)';
-		db.run(cmdStr, engPhrase, hinPhrase, function(err) {
+		console.log(req.session);
+		console.log(req.user);
+		db.run(cmdStr, req.user_id, engPhrase, hinPhrase, function(err) {
 			if (err) {
 			  return console.log(err.message);
 			}
@@ -63,6 +65,80 @@ function storeCard(req, res, next) {
 			console.log(`A row has been inserted with rowid ${this.lastID}`);
 			res.end();
 		  });
+// middleware functions
+
+// print the url of incoming HTTP request
+function printURL (req, res, next) {
+    console.log(req.url);
+    next();
+}
+
+// function to check whether user is logged when trying to access
+// personal data
+function isAuthenticated(req, res, next) {
+    if (req.user) {
+	console.log("Req.session:",req.session);
+	console.log("Req.user:",req.user);
+	next();
+    } else {
+	res.redirect('/login.html');  // send response telling
+	// Browser to go to login page
+    }
+}
+
+
+// function for end of server pipeline
+function fileNotFound(req, res) {
+    let url = req.url;
+    res.type('text/plain');
+    res.status(404);
+    res.send('Cannot find '+url);
+    }
+
+// Some functions Passport calls, that we can use to specialize.
+// This is where we get to write our own code, not just boilerplate. 
+// The callback "done" at the end of each one resumes Passport's
+// internal process. 
+
+// function called during login, the second time passport.authenticate
+// is called (in /auth/redirect/),
+// once we actually have the profile data from Google. 
+function gotProfile(accessToken, refreshToken, profile, done) {
+    console.log("Google profile",profile);
+    // here is a good place to check if user is in DB,
+    // and to store him in DB if not already there. 
+    // Second arg to "done" will be passed into serializeUser,
+    // should be key to get user out of database.
+
+    let dbRowID = profile.id;  // temporary! Should be the real unique
+    // key for db Row for this user in DB table.
+    // Note: cannot be zero, has to be something that evaluates to
+    // True.  
+
+    done(null, dbRowID); 
+}
+
+// Part of Server's sesssion set-up.  
+// The second operand of "done" becomes the input to deserializeUser
+// on every subsequent HTTP request with this session's cookie. 
+passport.serializeUser((dbRowID, done) => {
+    console.log("SerializeUser. Input is",dbRowID);
+    done(null, dbRowID);
+});
+
+// Called by passport.session pipeline stage on every HTTP request with
+// a current session cookie. 
+// Where we should lookup user database info. 
+// Whatever we pass in the "done" callback becomes req.user
+// and can be used by subsequent middleware.
+passport.deserializeUser((dbRowID, done) => {
+    console.log("deserializeUser. Input is:", dbRowID);
+    // here is a good place to look up user data in database using
+    // dbRowID. Put whatever you want into an object. It ends up
+    // as the property "user" of the "req" object. 
+    let userData = {userData: "find_this"};
+    done(null, userData);
+});
 			}
     else {
 		next();
@@ -276,6 +352,6 @@ passport.deserializeUser((dbRowID, done) => {
     // here is a good place to look up user data in database using
     // dbRowID. Put whatever you want into an object. It ends up
     // as the property "user" of the "req" object. 
-    let userData = {userData: "data from db row goes here"};
+    let userData = {userData: "find_this"};
     done(null, userData);
 });
