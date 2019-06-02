@@ -77,7 +77,7 @@ function reviewCard(req, res, next) {
 	let url = req.url;
 	let userID = req.session.passport.user;
 	if(userID != undefined){
-	cmdStr = 'SELECT * FROM Flashcards'; // WHERE user=\'' + userID + "\'";
+	cmdStr = 'SELECT * FROM Flashcards WHERE user=\'' + userID + "\'";
 	console.log(cmdStr);
     	db.all(cmdStr, function(err, rowData) {
 			if (err) {
