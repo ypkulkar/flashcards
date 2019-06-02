@@ -44,7 +44,7 @@ button{
 }
 
 .upper_buttons{
-    background-color: blue;
+    background-color: #606B9B;
     position: absolute;
     top: 25px;
     left: 25px;
@@ -59,9 +59,20 @@ button{
     font-size: 14pt;
     border-radius: 10px;
     text-decoration: none;
-    
 }
-
+@media (max-width: 750px){
+    .upper_buttons{
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+@media (max-width: 500px){
+    .upper_buttons{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+    
 #buttonbox{
     display: flex;
     flex: 1 1 100%;
@@ -70,27 +81,32 @@ button{
 }
 
 .lower_buttons{
-	background-color: green;
+	background-color: #70C7A9;
 }
 
-#save{
+/*#save{
     background-color: green; 
 }
 
 #next{
     background-color: green; 
 }
+*/
 
 #title{
     //margin-right: 40vw;
-    font-size: 32px;
     text-align: center;
     width: 100vw;
     position: relative;
-    font-size: 32pt;
-    color: blue;
+    font-size: 42px;
+    color: #606B9B;
     font-family: helvetica;
     font-weight: bold;
+}
+@media (max-width: 500px){
+    #title{
+        font-size: 36px;
+    }
 }
 
 #middle{
@@ -100,6 +116,18 @@ button{
     flex: 1 1 0;
     width: 650px;
 }
+
+@media (max-width: 750px){
+    #middle{
+        width: 425px;
+    }
+}	
+
+@media (max-width: 500px){
+    #middle{
+        width: 80vw;
+    }
+}	
 
 #translation{
     //font-size: 16pt;
@@ -113,6 +141,18 @@ button{
     font-size: 16pt;
     font-style: helvetica;
 }
+@media (max-width: 750px){
+    .textCard{
+        width: 200px;
+        height: 280px;
+    }
+}	
+@media (max-width: 500px){
+    .textCard{
+        width: 80vw;
+        height: 160px;
+    }
+}	
 
 .footer{
     display: flex;
@@ -120,7 +160,7 @@ button{
     padding-top: 10px;
     padding-bottom: 10px;
     justify-content: center;
-    background-color: blue;
+    background-color: #606B9B;
     color: white;
     font-family: helvetica;
 }
