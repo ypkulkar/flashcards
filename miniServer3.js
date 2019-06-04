@@ -284,6 +284,10 @@ function gotProfile(accessToken, refreshToken, profile, done) {
     // Note: cannot be zero, has to be something that evaluates to
     // True.  
 
+	//TODO:check for username in database
+	//if new user, store username and send to make cards
+	//if returning user, send to review cards
+
     done(null, dbRowID); 
 }
 
@@ -305,6 +309,6 @@ passport.deserializeUser((dbRowID, done) => {
     // here is a good place to look up user data in database using
     // dbRowID. Put whatever you want into an object. It ends up
     // as the property "user" of the "req" object. 
-    let userData = {userData: "find_this"};
+    let userData = {userData: dbRowID};
     done(null, userData);
 });
