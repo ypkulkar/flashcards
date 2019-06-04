@@ -19,4 +19,12 @@ db.all(cmdStr, function(err, rowData) {
     // get the last insert id
   console.log("got: ", rowData, "\n");
   });
+cmdStr = 'SELECT * FROM Usernames';
+db.all(cmdStr, function(err, rowData) {
+    if (err) {
+      return console.log(err.message);
+    }
+    // get the last insert id
+  console.log("got: ", rowData, "\n");
+  });
 
