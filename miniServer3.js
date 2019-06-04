@@ -279,7 +279,7 @@ function gotProfile(accessToken, refreshToken, profile, done) {
     // Second arg to "done" will be passed into serializeUser,
     // should be key to get user out of database.
 
-    let dbRowID = profile.id;  // temporary! Should be the real unique
+    let dbRowID = profile.id;
     // key for db Row for this user in DB table.
     // Note: cannot be zero, has to be something that evaluates to
     // True.  
@@ -287,6 +287,14 @@ function gotProfile(accessToken, refreshToken, profile, done) {
 	//TODO:check for username in database
 	//if new user, store username and send to make cards
 	//if returning user, send to review cards
+	cmdStr = 'INSERT INTO Usernames(user, username) VALUES(@0,@1)';
+	db.run(cmdStr,profile.id,profile.displayName,function(err){
+		if (err) {
+			return console.log(err.message);
+		}
+		console.log(`A row has been inserted with rowid ${this.lastID}`);
+	
+	});
 
     done(null, dbRowID); 
 }
