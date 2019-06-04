@@ -26,6 +26,12 @@ function translateRequest(phrase){
 }
 
 
+function getUserName(){
+  let url = "username";
+  let xhr = createRequest('GET', url);
+  return makeRequest(xhr);
+}
+
 
 // Make the actual CORS request.
 function makeRequest(xhr) {

@@ -139,3 +139,12 @@ var CreateCardMain = function (_React$Component) {
 
 ReactDOM.render(React.createElement(CreateCardMain, null), document.getElementById('root'));
 
+var xhr = getUserName();
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        //console.log(xhr.responseText);
+        var object = JSON.parse(xhr.responseText);
+        document.getElementById("username").textContent = object.username;
+    }
+};
+

@@ -124,17 +124,17 @@ var CreateCardMain = function (_React$Component) {
       if (event.charCode == 13) {
         var newPhrase = document.getElementById("inputEng").value;
         document.getElementById("inputEng").value = newPhrase.slice(0, newPhrase.length);
-        var xhr = translateRequest(newPhrase);
+        var _xhr = translateRequest(newPhrase);
         var that = this;
-        xhr.onreadystatechange = function () {
+        _xhr.onreadystatechange = function () {
 
-          if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-              var object = JSON.parse(xhr.responseText);
+          if (_xhr.readyState == 4) {
+            if (_xhr.status == 200) {
+              var object = JSON.parse(_xhr.responseText);
               that.setState({ opinion: object.translation });
             }
 
-            if (xhr.status == 404) {
+            if (_xhr.status == 404) {
               console.log("Error 404: File not found");
             }
           }
@@ -160,4 +160,13 @@ var CreateCardMain = function (_React$Component) {
 
 
 ReactDOM.render(React.createElement(CreateCardMain, null), document.getElementById('root'));
+
+var xhr = getUserName();
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    //console.log(xhr.responseText);
+    var object = JSON.parse(xhr.responseText);
+    document.getElementById("username").textContent = object.username;
+  }
+};
 

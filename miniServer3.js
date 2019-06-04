@@ -96,6 +96,25 @@ function reviewCard(req, res, next) {
 
 }
 
+function getUsername(req, res, next){
+	let sObj = req.query;
+	let url = req.url;
+	let userID = req.session.passport.user;
+
+	cmdStr = 'SELECT * FROM Usernames WHERE user=\'' + userID + "\'";
+
+    db.get(cmdStr, function(err, rowData) {
+		if (err) {
+		  return console.log(err.message);
+		}
+		console.log("grabbed a card");
+		console.log(rowData.username);
+		res.json( {"username":rowData.username});
+		res.end();
+	});
+
+}
+
 function fileNotFound(req, res) {
     let url = req.url;
     console.log("url= "+url);
@@ -127,6 +146,7 @@ app.use(passport.session());
 app.get('/query', queryHandler );   // if not, is it a valid query?
 app.post('/store', storeCard);	    // is it a valid request to store a card?
 app.get('/card', reviewCard);
+app.get('/username', getUsername);
 
 // Public static files
 app.get('/*',express.static('public'));
