@@ -31,7 +31,7 @@ class CreateCardMain extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { engPhrase: "", hinPhrase: "" };
+      this.state = { engPhrase: "", hinPhrase: "" , guessPhrase: ""};
 	  this.nextFunc = this.nextFunc.bind(this);
 	  this.onload_Func= this.onload_Func.bind(this);
   }
@@ -42,7 +42,7 @@ class CreateCardMain extends React.Component {
             <p id="title">Lango!</p>
             <a id="add" className="upper_buttons" href="lango.html">Add</a>
       </Header>
-      <div id="middle">
+      <div id="r-middle">
       <Card>
  	<Txt id="inputEng" phrase={this.state.engPhrase}  />
       </Card>
@@ -50,6 +50,11 @@ class CreateCardMain extends React.Component {
       <Card>
  	<Txt id="outputEng" phrase={this.state.hinPhrase} /> 
       </Card>
+
+      <Card>
+ 	<textarea id="guess-box" phrase={this.state.guessPhrase}  />
+      </Card>
+
       <div id="buttonbox">
           <button id="next" className = "lower_buttons" onClick={this.nextFunc}>Next</button>
       </div>
@@ -89,7 +94,9 @@ xhr.onreadystatechange = function() {
   if(xhr.readyState === 4 && xhr.status === 200) {
     //console.log(xhr.responseText);
     let object = JSON.parse(xhr.responseText);
-    document.getElementById("username").textContent = object.username;	
+	if(object.username != undefined){
+    		document.getElementById("username").textContent = object.username;
+	}	
   }		
   
 } 

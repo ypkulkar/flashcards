@@ -77,23 +77,29 @@ function reviewCard(req, res, next) {
 	let url = req.url;
 	let userID = req.session.passport.user;
 	if(userID != undefined){
-	cmdStr = 'SELECT * FROM Flashcards WHERE user=\'' + userID + "\'";
+	cmdStr = 'SELECT rowid, * FROM Flashcards WHERE user=\'' + userID + "\'";
 	console.log(cmdStr);
     	db.all(cmdStr, function(err, rowData) {
 			if (err) {
 			  return console.log(err.message);
 			}
 			console.log("grabbed a card");
-			console.log(rowData[0]);
+			console.log(rowData);
 			//TODO: change from returning first card to analyzing 
 			//for which ones have been seen least, etc
-			res.json( {"engPhrase":rowData[0].english, "hinPhrase":rowData[0].hindi});
+			let rows = rowData.length;
+			let randInt = getRandInt(rows);
+			res.json( {"engPhrase":rowData[randInt].english, "hinPhrase":rowData[0].hindi});
+			db.run(`UPDATE Flashcards SET seen = ${rowData[randInt].seen + 1} WHERE rowid = ${rowData[randInt].rowid}`)
 			res.end();
 		});
 	}else{
 		next();
 	}
 
+}
+function getRandInt(max){
+	return Math.floor(Math.random()*Math.floor(max));
 }
 
 function getUsername(req, res, next){
@@ -107,9 +113,14 @@ function getUsername(req, res, next){
 		if (err) {
 		  return console.log(err.message);
 		}
-		console.log("grabbed a card");
-		console.log(rowData.username);
-		res.json( {"username":rowData.username});
+		if(rowData != undefined){
+			console.log("grabbed a card");
+			console.log(rowData.username);
+			res.json( {"username":rowData.username});
+		}
+		else{
+			res.json({"username":""});
+		}
 		res.end();
 	});
 
@@ -303,18 +314,29 @@ function gotProfile(accessToken, refreshToken, profile, done) {
     // key for db Row for this user in DB table.
     // Note: cannot be zero, has to be something that evaluates to
     // True.  
+	
+	db.get(`SELECT * FROM Usernames WHERE user=\'${profile.id}\'`, dataCallback);
+	function dataCallback(err, rowData){
+		if(err){console.log("error: ",err);}
+		else{
+			if(rowData == undefined){
+				
+				cmdStr = 'INSERT INTO Usernames(user, username, last_seen) VALUES(@0,@1,0)';
+				db.run(cmdStr,profile.id,profile.displayName,function(err){
+					if (err) {
+						return console.log(err.message);
+					}
+					console.log(`A row has been inserted with rowid ${this.lastID}`);
+				
+				});
+			}	
+			console.log("got: ", rowData, "\n");
+		}
+	}
 
 	//TODO:check for username in database
 	//if new user, store username and send to make cards
 	//if returning user, send to review cards
-	cmdStr = 'INSERT INTO Usernames(user, username) VALUES(@0,@1)';
-	db.run(cmdStr,profile.id,profile.displayName,function(err){
-		if (err) {
-			return console.log(err.message);
-		}
-		console.log(`A row has been inserted with rowid ${this.lastID}`);
-	
-	});
 
     done(null, dbRowID); 
 }

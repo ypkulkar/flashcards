@@ -54,7 +54,7 @@ var CreateCardMain = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (CreateCardMain.__proto__ || Object.getPrototypeOf(CreateCardMain)).call(this, props));
 
-        _this.state = { engPhrase: "", hinPhrase: "" };
+        _this.state = { engPhrase: "", hinPhrase: "", guessPhrase: "" };
         _this.nextFunc = _this.nextFunc.bind(_this);
         _this.onload_Func = _this.onload_Func.bind(_this);
         return _this;
@@ -82,7 +82,7 @@ var CreateCardMain = function (_React$Component) {
                 ),
                 React.createElement(
                     "div",
-                    { id: "middle" },
+                    { id: "r-middle" },
                     React.createElement(
                         Card,
                         null,
@@ -92,6 +92,11 @@ var CreateCardMain = function (_React$Component) {
                         Card,
                         null,
                         React.createElement(Txt, { id: "outputEng", phrase: this.state.hinPhrase })
+                    ),
+                    React.createElement(
+                        Card,
+                        null,
+                        React.createElement("textarea", { id: "guess-box", phrase: this.state.guessPhrase })
                     ),
                     React.createElement(
                         "div",
@@ -144,7 +149,9 @@ xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
         //console.log(xhr.responseText);
         var object = JSON.parse(xhr.responseText);
-        document.getElementById("username").textContent = object.username;
+        if (object.username != undefined) {
+            document.getElementById("username").textContent = object.username;
+        }
     }
 };
 

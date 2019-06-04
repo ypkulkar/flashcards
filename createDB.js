@@ -11,7 +11,7 @@ var commands = 2;
 // If the table already exists, causes an error.
 // Fix the error by removing or renaming Flashcards.db
 let cmdStr = ['CREATE TABLE Flashcards (user TEXT, english TEXT, hindi TEXT, seen INT, correct INT)',
-	'CREATE TABLE Usernames (user TEXT, username TEXT)'];
+	'CREATE TABLE Usernames (user TEXT, username TEXT, last_seen INT)'];
 
 db.run(cmdStr[0],tableCreationCallback);
 
