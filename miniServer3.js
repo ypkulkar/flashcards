@@ -89,7 +89,7 @@ function reviewCard(req, res, next) {
 			//for which ones have been seen least, etc
 			let rows = rowData.length;
 			let randInt = getRandInt(rows);
-			res.json( {"engPhrase":rowData[randInt].english, "hinPhrase":rowData[0].hindi});
+			res.json( {"engPhrase":rowData[randInt].english, "hinPhrase":rowData[randInt].hindi});
 			db.run(`UPDATE Flashcards SET seen = ${rowData[randInt].seen + 1} WHERE rowid = ${rowData[randInt].rowid}`);
 			db.run(`UPDATE Usernames SET last_seen=${rowData[randInt].rowid} WHERE user=${userID}`);			
 			res.end();

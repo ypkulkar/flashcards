@@ -88,6 +88,11 @@ class CreateCardMain extends React.Component {
 
 		console.log("In the next function\n");
 		
+		document.getElementById("guess-box").value = "";	
+		
+		let f = document.querySelector("#flipcard");
+		f.classList.remove('is-flipped');
+	
 		var xhr = reviewRequest();
 		xhr.onload = this.onload_Func;
 
@@ -108,15 +113,15 @@ class CreateCardMain extends React.Component {
 		}else{
 			console.log("that's not correct. try again");
 		}
+		event.preventDefault();
 	 }
-
-
 
 	 };
 
 	onload_Func(event){
 		console.log(event.target);
 		let object = JSON.parse(event.target.responseText);
+		console.log(object);
 		this.setState({engPhrase: object.engPhrase, hinPhrase: object.hinPhrase});		
 	}
 

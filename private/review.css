@@ -15,11 +15,11 @@
 
 .faceup{
 	background: red;
+	transform: rotateX(180deg);
 }
 
 .facedown{
 	background: blue;
-	transform: rotateX(180deg);
 }
 
 .is-flipped{

@@ -148,6 +148,11 @@ var CreateCardMain = function (_React$Component) {
 
       console.log("In the next function\n");
 
+      document.getElementById("guess-box").value = "";
+
+      var f = document.querySelector("#flipcard");
+      f.classList.remove('is-flipped');
+
       var xhr = reviewRequest();
       xhr.onload = this.onload_Func;
     }
@@ -167,6 +172,7 @@ var CreateCardMain = function (_React$Component) {
         } else {
           console.log("that's not correct. try again");
         }
+        event.preventDefault();
       }
     }
   }, {
@@ -174,6 +180,7 @@ var CreateCardMain = function (_React$Component) {
     value: function onload_Func(event) {
       console.log(event.target);
       var object = JSON.parse(event.target.responseText);
+      console.log(object);
       this.setState({ engPhrase: object.engPhrase, hinPhrase: object.hinPhrase });
     }
   }]);
