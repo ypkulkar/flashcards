@@ -1,8 +1,31 @@
+.textCard{
+    width: 100%;
+    align-self: center;
+    border: 2px solid grey;
+    font-size: 16pt;
+    font-style: helvetica;
+}
+
+@media (max-width: 750px){
+    .textCard{
+        width: 200px;
+    }
+}	
+@media (max-width: 500px){
+    .textCard{
+        width: 80vw;
+    }
+}	
+
+.guessCard {
+	//height: 20px;
+    	margin-bottom: 15px;
+}
+
 .ftextcard{
 	position: absolute;
-	height: 100%;
-	width: 100%;
 	backface-visibility: hidden;
+	height: 100%;
 }
 
 #flipcard{
@@ -11,6 +34,7 @@
 	position: relative;
 	transition: transform 1s;
 	transform-style: preserve-3d;
+	margin-bottom: 15px;
 }
 
 .faceup{
@@ -25,5 +49,13 @@
 }
 
 #r-middle{
-	perspective: 600px;
+   // perspective: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 1 0;
+    width: 550px;
+    margin-top: 30px;
 }
+
+

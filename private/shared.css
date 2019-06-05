@@ -1,0 +1,126 @@
+#root{
+    width: 100vw;
+    height: 100vh;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+main{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.header{
+    display: flex;
+    padding-top: 25px
+}
+
+button{
+    outline: none;
+    border: none;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: 45px;
+    font-size: 14pt;
+    border-radius: 10px;
+    color: white;
+}
+
+.upper_buttons{
+    background-color: #606B9B;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    color: white;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 12px;
+    height: 30px;
+    font-size: 14pt;
+    border-radius: 10px;
+    text-decoration: none;
+}
+@media (max-width: 750px){
+    .upper_buttons{
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+@media (max-width: 500px){
+    .upper_buttons{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+    
+#buttonbox{
+    display: flex;
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    height: auto;
+}
+
+.lower_buttons{
+	background-color: #70C7A9;
+}
+
+/*#save{
+    background-color: green; 
+}
+
+#next{
+    background-color: green; 
+}
+*/
+
+#title{
+    //margin-right: 40vw;
+    text-align: center;
+    width: 100vw;
+    position: relative;
+    font-size: 42px;
+    color: #606B9B;
+    font-family: helvetica;
+    font-weight: bold;
+}
+@media (max-width: 500px){
+    #title{
+        font-size: 36px;
+    }
+}
+
+
+.footer{
+    display: flex;
+    width: 100vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: center;
+    background-color: #606B9B;
+    color: white;
+    font-family: helvetica;
+}
+
+#username{
+    font-size: 24pt;
+}
+
+textarea{
+    outline: none;
+    resize: none;
+    width: 98%;
+    height: 97%;    
+    border: none;
+    font-style: helvetica;
+}

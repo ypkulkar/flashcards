@@ -13,7 +13,7 @@ function Footer(props) {
     }
 
 function Card(props) {
-    return <div className="textCard">
+    return <div className="textCard guessCard">
     	   {props.children}
 	</div>;
 	}

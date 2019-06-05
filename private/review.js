@@ -27,7 +27,7 @@ function Footer(props) {
 function Card(props) {
   return React.createElement(
     "div",
-    { className: "textCard" },
+    { className: "textCard guessCard" },
     props.children
   );
 }
