@@ -18,6 +18,19 @@ function Card(props) {
 	</div>;
 	}
 	
+function FlipCard1(props) {
+    return <div className="textCard ftextcard faceup">
+    	   {props.children}
+	</div>;
+	}
+
+function FlipCard2(props) {
+    return <div className="textCard ftextcard facedown">
+    	   {props.children}
+	</div>;
+	}
+
+
 
 function Txt(props) {
 	 if (props.phrase == undefined) {
@@ -44,13 +57,16 @@ class CreateCardMain extends React.Component {
             <a id="add" className="upper_buttons" href="lango.html">Add</a>
       </Header>
       <div id="r-middle">
-      <Card>
- 	<Txt id="inputEng" phrase={this.state.engPhrase}  />
-      </Card>
-      
-      <Card>
- 	<Txt id="outputEng" phrase={this.state.hinPhrase} /> 
-      </Card>
+	  
+	  <div id="flipcard">
+      	<FlipCard1>
+ 			<Txt id="inputEng" phrase={this.state.engPhrase}  />
+      	</FlipCard1>
+
+      	<FlipCard2>
+ 			<Txt id="outputEng" phrase={this.state.hinPhrase} /> 
+      	</FlipCard2>
+	  </div>
 
       <Card>
  	<textarea id="guess-box" phrase={this.state.guessPhrase} onKeyPress={this.checkReturn} />
@@ -79,7 +95,10 @@ class CreateCardMain extends React.Component {
 
     checkReturn(event) {
 	 if (event.charCode == 13) {
-		
+		let f = document.querySelector("#flipcard");
+		f.classList.toggle('is-flipped');
+
+	
 		let guess = document.getElementById("guess-box").value;
 		console.log(document.getElementById("translation"));
 		console.log(guess);
@@ -93,26 +112,6 @@ class CreateCardMain extends React.Component {
 
 
 
-		/*
-		document.getElementById("inputEng").value = newPhrase.slice(0, newPhrase.length);
-		let xhr = translateRequest(newPhrase);
-		var that = this;
-		xhr.onreadystatechange = function(){
-
-			if(xhr.readyState == 4){
-				if(xhr.status == 200){
-					let object = JSON.parse(xhr.responseText);
-					that.setState({opinion: object.translation});
-				}
-				
-				if(xhr.status == 404){
-					console.log("Error 404: File not found")
-				}
-			}
-		};
-		event.preventDefault();
-	    }
-		*/
 	 };
 
 	onload_Func(event){
