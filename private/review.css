@@ -18,15 +18,23 @@
 }
 
 .flip-symbol {
-    width: 30%;
-    height: 30%;
+	padding-right: 0;
+	padding-left: 0;
+	width: 10%;
+	//height: 5%;	
     position: absolute;
     backface-visibility: hidden;
+	background: none;
     //margin-right: -10%;
     //clip-path: inset(10px 20px 30px 40px);
     //padding-right: -30px;
     //align-self: flex-end;
     //left: 40vw;
+}
+
+.flip-symbol > img{
+    width: 100%;
+    height: 100%;
 }
 
 @media (max-width: 750px){

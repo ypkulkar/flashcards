@@ -102,7 +102,7 @@ var CreateCardMain = function (_React$Component) {
 					{ id: "r-middle" },
 					React.createElement(
 						"div",
-						{ id: "flipcard" },
+						{ id: "flipcard", className: "" },
 						React.createElement(
 							FlipCard1,
 							null,
@@ -181,8 +181,10 @@ var CreateCardMain = function (_React$Component) {
 
 				if (guess == document.querySelector(".translation").textContent) {
 					console.log("you guessed correct!");
+					updateCorrect(true);
 				} else {
 					console.log("that's not correct. try again");
+					updateCorrect(false);
 				}
 				event.preventDefault();
 			}

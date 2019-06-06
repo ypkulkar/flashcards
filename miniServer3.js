@@ -71,6 +71,28 @@ function storeCard(req, res, next) {
     }
 }
 
+function updateCorrect(req,res,next){
+	let sObj = req.query;
+	console.log(sObj.isCorrect);
+	var isCorrect = sObj.isCorrect;
+	let userID = req.session.passport.user;
+	let cmdStr = 'SELECT * FROM Usernames WHERE user=\'' + userID + "\'";
+	db.get(cmdStr, function(err, rowData) {
+		if (err) {
+		  return console.log(err.message);
+		}
+		let row = rowData.last_seen
+		console.log(isCorrect);
+		if(isCorrect == "true"){
+			db.get("SELECT correct FROM Flashcards WHERE rowid=" + row, function(err, rowData) {
+				let correct = rowData.correct;
+				cmdStr = 'UPDATE Flashcards SET correct=' + (correct+1) + '  WHERE rowid=' + row;
+				db.run(cmdStr);
+			});
+		}// correct
+	  });
+}
+
 
 function reviewCard(req, res, next) {
 	let sObj = req.query;
@@ -89,9 +111,16 @@ function reviewCard(req, res, next) {
 			//for which ones have been seen least, etc
 			let rows = rowData.length;
 			let randInt = getRandInt(rows);
+			let userID = req.session.passport.user;
+			console.log(userID);
 			res.json( {"engPhrase":rowData[randInt].english, "hinPhrase":rowData[randInt].hindi});
 			db.run(`UPDATE Flashcards SET seen = ${rowData[randInt].seen + 1} WHERE rowid = ${rowData[randInt].rowid}`);
-			db.run(`UPDATE Usernames SET last_seen=${rowData[randInt].rowid} WHERE user=${userID}`);			
+			db.run(`UPDATE Usernames SET last_seen=${rowData[randInt].rowid} WHERE user=\'${userID}\'`, function(err){	
+			//db.run(`UPDATE Usernames SET last_seen=${rowData[randInt].rowid}`, function(err){	
+				if (err) {
+			  	return console.log(err.message);
+				}
+			});
 			res.end();
 		});
 	}else{
@@ -159,6 +188,7 @@ app.get('/query', queryHandler );   // if not, is it a valid query?
 app.post('/store', storeCard);	    // is it a valid request to store a card?
 app.get('/card', reviewCard);
 app.get('/username', getUsername);
+app.post('/update', updateCorrect);	    // is it a valid request to store a card?
 
 // Public static files
 app.get('/*',express.static('public'));

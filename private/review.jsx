@@ -58,7 +58,7 @@ class CreateCardMain extends React.Component {
       </Header>
       <div id="r-middle">
 	  
-	  <div id="flipcard">
+	  <div id="flipcard" className="">
       	<FlipCard1>
  			<Txt id="inputEng" phrase={this.state.engPhrase}  />
 			<button onClick={flip} className="flip-symbol">
@@ -118,8 +118,10 @@ class CreateCardMain extends React.Component {
 
 		if(guess == document.querySelector(".translation").textContent){
 			console.log("you guessed correct!");
+			updateCorrect(true);
 		}else{
 			console.log("that's not correct. try again");
+			updateCorrect(false);
 		}
 		event.preventDefault();
 	 }

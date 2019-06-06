@@ -25,6 +25,11 @@ function translateRequest(phrase){
   return makeRequest(xhr);
 }
 
+function updateCorrect(isCorrect){
+  let url = `update?isCorrect=${isCorrect}`;
+  let xhr = createRequest('POST', url);
+  return makeRequest(xhr);
+}
 
 function getUserName(){
   let url = "username";
