@@ -37,6 +37,7 @@ const db = new sqlite3.Database(dbFileName, (err) => {
 });
 
 function queryHandler(req, res, next) {
+    console.log("queryHandler");
     let url = req.url;
     let qObj = req.query;
     if (qObj.phrase != undefined) {
@@ -49,15 +50,17 @@ function queryHandler(req, res, next) {
 }
 
 function storeCard(req, res, next) {
+    console.log("storeCard");
 	let sObj = req.query;
 	let url = req.url;
 	if (sObj.engPhrase != undefined && sObj.hinPhrase != undefined) {
 		let engPhrase = sObj.engPhrase;
 		let hinPhrase = sObj.hinPhrase;
 		cmdStr = 'INSERT INTO Flashcards(user, english, hindi, seen, correct) VALUES(@0,@1,@2,0,0)';
-		console.log(req.session);
-		console.log(req.user);
+		//console.log(req.session);
+		//console.log(req.user);
 		db.run(cmdStr, req.session.passport.user, engPhrase, hinPhrase, function(err) {
+			console.log("callback: stored new card in db");
 			if (err) {
 			  return console.log(err.message);
 			}
@@ -72,22 +75,32 @@ function storeCard(req, res, next) {
 }
 
 function updateCorrect(req,res,next){
+    console.log("updateCorrect");
+
 	let sObj = req.query;
-	console.log(sObj.isCorrect);
+	//console.log(sObj.isCorrect);
 	var isCorrect = sObj.isCorrect;
 	let userID = req.session.passport.user;
 	let cmdStr = 'SELECT * FROM Usernames WHERE user=\'' + userID + "\'";
 	db.get(cmdStr, function(err, rowData) {
+		console.log("callback: getting the last seen id");
 		if (err) {
 		  return console.log(err.message);
 		}
 		let row = rowData.last_seen
-		console.log(isCorrect);
+		//console.log(isCorrect);
 		if(isCorrect == "true"){
 			db.get("SELECT correct FROM Flashcards WHERE rowid=" + row, function(err, rowData) {
+				console.log("callback: getting correct # from card");
 				let correct = rowData.correct;
 				cmdStr = 'UPDATE Flashcards SET correct=' + (correct+1) + '  WHERE rowid=' + row;
-				db.run(cmdStr);
+				db.run(cmdStr, function(err) {
+					if (err) {
+					  return console.log(err.message);
+					}
+					console.log("callback: updated correct # of card");
+					res.end();
+				});
 			});
 		}// correct
 	  });
@@ -95,18 +108,19 @@ function updateCorrect(req,res,next){
 
 
 function reviewCard(req, res, next) {
+    console.log("reviewCard");
 	let sObj = req.query;
 	let url = req.url;
 	let userID = req.session.passport.user;
 	if(userID != undefined){
 	cmdStr = 'SELECT rowid, * FROM Flashcards WHERE user=\'' + userID + "\'";
-	console.log(cmdStr);
+	//console.log(cmdStr);
     	db.all(cmdStr, function(err, rowData) {
 			if (err) {
 			  return console.log(err.message);
 			}
-			console.log("grabbed a card");
-			console.log(rowData);
+			console.log("callback: grabbed a card for review");
+			//console.log(rowData);
 			//TODO: change from returning first card to analyzing 
 			//for which ones have been seen least, etc
 			if(rowData.length == 0){
@@ -124,7 +138,7 @@ function reviewCard(req, res, next) {
 			let tries = 0;
 			
 			do{
-				console.log("finding a good num...");
+				//console.log("finding a good num...");
 				randInt = getRandInt(rows);
 				let seen = rowData[randInt].seen;
 				let correct = rowData[randInt].correct;
@@ -134,9 +148,13 @@ function reviewCard(req, res, next) {
 			} while(cutoff > score && tries < max_tries);
 
 			res.json( {"engPhrase":rowData[randInt].english, "hinPhrase":rowData[randInt].hindi});
-			db.run(`UPDATE Flashcards SET seen = ${rowData[randInt].seen + 1} WHERE rowid = ${rowData[randInt].rowid}`);
+			db.run(`UPDATE Flashcards SET seen = ${rowData[randInt].seen + 1} WHERE rowid = ${rowData[randInt].rowid}`, function() {
+				
+				console.log("callback: updated seen count on new card");
+			});
+
 			db.run(`UPDATE Usernames SET last_seen=${rowData[randInt].rowid} WHERE user=\'${userID}\'`, function(err){	
-			//db.run(`UPDATE Usernames SET last_seen=${rowData[randInt].rowid}`, function(err){	
+				console.log("callback: updated last seen # for user");
 				if (err) {
 			  	return console.log(err.message);
 				}
@@ -153,6 +171,7 @@ function getRandInt(max){
 }
 
 function getUsername(req, res, next){
+    console.log("getUsername");
 	let sObj = req.query;
 	let url = req.url;
 	let userID = req.session.passport.user;
@@ -160,12 +179,12 @@ function getUsername(req, res, next){
 	cmdStr = 'SELECT * FROM Usernames WHERE user=\'' + userID + "\'";
 
     db.get(cmdStr, function(err, rowData) {
+		console.log("calback: got username");
 		if (err) {
 		  return console.log(err.message);
 		}
 		if(rowData != undefined){
-			console.log("grabbed a card");
-			console.log(rowData.username);
+			//console.log(rowData.username);
 			res.json( {"username":rowData.username});
 		}
 		else{
@@ -245,6 +264,7 @@ app.get('/auth/redirect',
             //TODO:check for cards
 	    let userID = req.session.passport.user;
 	    db.get("SELECT * FROM Flashcards WHERE user=\'" + userID + "\'", function(err, rowData){
+	    	console.log('callback: checked to see whether user has any cards');
 		if(rowData == undefined){
 			res.redirect('/lango.html');
 		}//user has no cards
@@ -270,6 +290,7 @@ app.listen(port, function (){console.log('Listening...');} )
 ////
 
 function get_translation(instring,res){
+    console.log("get_translation");
 
 		const APIrequest = require('request');
 		const http = require('http');
@@ -289,7 +310,7 @@ function get_translation(instring,res){
 			]
 			}
 
-		console.log("English phrase: ", requestObject.q[0]);
+		//console.log("English phrase: ", requestObject.q[0]);
 				
 		// The call that makes a request to the API
 		// Uses the Node request module, which packs up and sends off
@@ -315,10 +336,11 @@ function get_translation(instring,res){
 				// API worked but is not giving you data
 				//console.log(APIresHead.error);
 				} else {
-				console.log("In Hindi: ", 
-					APIresBody.data.translations[0].translatedText);
+				//console.log("In Hindi: ", 
+				//	APIresBody.data.translations[0].translatedText);
 				// print it out as a string, nicely formatted
 				res.json( {"translation":APIresBody.data.translations[0].translatedText});
+				res.end(); //XXX
 				}
 			}
 		} // end callback function
@@ -339,8 +361,8 @@ function printURL (req, res, next) {
 // personal data
 function isAuthenticated(req, res, next) {
     if (req.user) {
-	console.log("Req.session:",req.session);
-	console.log("Req.user:",req.user);
+	//console.log("Req.session:",req.session);
+	//console.log("Req.user:",req.user);
 	next();
     } else {
 	res.redirect('/login.html');  // send response telling
@@ -366,7 +388,7 @@ function fileNotFound(req, res) {
 // is called (in /auth/redirect/),
 // once we actually have the profile data from Google. 
 function gotProfile(accessToken, refreshToken, profile, done) {
-    console.log("Google profile",profile);
+    //console.log("Google profile",profile);
     // here is a good place to check if user is in DB,
     // and to store him in DB if not already there. 
     // Second arg to "done" will be passed into serializeUser,
@@ -379,12 +401,13 @@ function gotProfile(accessToken, refreshToken, profile, done) {
 	
 	db.get(`SELECT * FROM Usernames WHERE user=\'${profile.id}\'`, dataCallback);
 	function dataCallback(err, rowData){
+		console.log("callback: check db for user");
 		if(err){console.log("error: ",err);}
 		else{
 			if(rowData == undefined){
-				
 				cmdStr = 'INSERT INTO Usernames(user, username, last_seen) VALUES(@0,@1,0)';
 				db.run(cmdStr,profile.id,profile.displayName,function(err){
+					console.log("callback: add user to db");
 					if (err) {
 						return console.log(err.message);
 					}
@@ -392,7 +415,7 @@ function gotProfile(accessToken, refreshToken, profile, done) {
 				
 				});
 			}	
-			console.log("got: ", rowData, "\n");
+			//console.log("got: ", rowData, "\n");
 		}
 	}
 
