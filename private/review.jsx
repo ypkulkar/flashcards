@@ -34,9 +34,9 @@ function FlipCard2(props) {
 
 function Txt(props) {
 	 if (props.phrase == undefined) {
-	    return <p id="translation">Text missing</p>;
+	    return <p className="translation">Text missing</p>;
 	    }
-	 else return <p id="translation">{props.phrase}</p>;
+	 else return <p className="translation">{props.phrase}</p>;
 	 }
 
 
@@ -90,11 +90,13 @@ class CreateCardMain extends React.Component {
 
 		console.log("In the next function\n");
 		
-		document.getElementById("guess-box").value = "";	
+		this.setState({engPhrase: "", hinPhrase: ""});		
 		
 		let f = document.querySelector("#flipcard");
 		f.classList.remove('is-flipped');
-	
+			
+		document.getElementById("guess-box").value = "";	
+		
 		var xhr = reviewRequest();
 		xhr.onload = this.onload_Func;
 
@@ -107,10 +109,10 @@ class CreateCardMain extends React.Component {
 
 	
 		let guess = document.getElementById("guess-box").value;
-		console.log(document.getElementById("translation"));
+		console.log(document.querySelector(".translation"));
 		console.log(guess);
 
-		if(guess == document.getElementById("translation").textContent){
+		if(guess == document.querySelector(".translation").textContent){
 			console.log("you guessed correct!");
 		}else{
 			console.log("that's not correct. try again");
@@ -146,4 +148,9 @@ xhr.onreadystatechange = function() {
   
 } 
 
+let flips = document.querySelector("flip-symbol");
+flips.onclick = function() {
+		let f = document.querySelector("#flipcard");
+		f.classList.toggle('is-flipped');
+}
 

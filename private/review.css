@@ -1,19 +1,32 @@
 .textCard{
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
+    //flex-direction: column;
     position: relative;
     width: 100%;
     align-self: center;
     border: 2px solid grey;
     font-size: 16pt;
     font-style: helvetica;
+    text-align: center;
+}
+
+.translation{
+    width: 100%;
+    align-self: center;
+    //vertical-align: middle;
 }
 
 .flip-symbol {
     width: 30%;
     height: 30%;
     position: absolute;
-    align-self: flex-end;
+    backface-visibility: hidden;
+    //margin-right: -10%;
+    //clip-path: inset(10px 20px 30px 40px);
+    //padding-right: -30px;
+    //align-self: flex-end;
+    //left: 40vw;
 }
 
 @media (max-width: 750px){
