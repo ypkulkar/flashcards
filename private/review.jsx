@@ -61,6 +61,7 @@ class CreateCardMain extends React.Component {
 	  <div id="flipcard" className="">
       	<FlipCard1>
  			<Txt id="inputEng" phrase={this.state.engPhrase}  />
+			<button id="green-correct">Correct!</button>
 			<button onClick={flip} className="flip-symbol">
 				<img src="flip_symbol.svg" />
 			</button>
@@ -96,6 +97,8 @@ class CreateCardMain extends React.Component {
 		
 		this.setState({engPhrase: "", hinPhrase: ""});		
 		
+		document.querySelector("#green-correct").style.display = "none";
+		
 		let f = document.querySelector("#flipcard");
 		f.classList.remove('is-flipped');
 			
@@ -119,6 +122,7 @@ class CreateCardMain extends React.Component {
 		if(guess == document.querySelector(".translation").textContent){
 			console.log("you guessed correct!");
 			updateCorrect(true);
+			document.querySelector("#green-correct").style.display = "flex";
 		}else{
 			console.log("that's not correct. try again");
 			updateCorrect(false);

@@ -109,6 +109,11 @@ var CreateCardMain = function (_React$Component) {
 							React.createElement(Txt, { id: "inputEng", phrase: this.state.engPhrase }),
 							React.createElement(
 								"button",
+								{ id: "green-correct" },
+								"Correct!"
+							),
+							React.createElement(
+								"button",
 								{ onClick: flip, className: "flip-symbol" },
 								React.createElement("img", { src: "flip_symbol.svg" })
 							)
@@ -160,6 +165,8 @@ var CreateCardMain = function (_React$Component) {
 
 			this.setState({ engPhrase: "", hinPhrase: "" });
 
+			document.querySelector("#green-correct").style.display = "none";
+
 			var f = document.querySelector("#flipcard");
 			f.classList.remove('is-flipped');
 
@@ -182,6 +189,7 @@ var CreateCardMain = function (_React$Component) {
 				if (guess == document.querySelector(".translation").textContent) {
 					console.log("you guessed correct!");
 					updateCorrect(true);
+					document.querySelector("#green-correct").style.display = "flex";
 				} else {
 					console.log("that's not correct. try again");
 					updateCorrect(false);
