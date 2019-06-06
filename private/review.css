@@ -11,12 +11,29 @@
     text-align: center;
 }
 
-#green-correct {
-    background-color: green;
-    height: 100%;
+#correct-box {
     width: 100%;
+    height: 100%;
+    display: flex;
     position: absolute;
+    justify-content: center;
+    align-items: center;
+}
+
+#green-correct {
+    color: green;
+    background-color: limegreen;
+    height: 100px;
+    width: 200px;
     display: none;
+    border: .3rem solid green;
+    border-radius: 0px;
+    text-align: center;
+    padding-left: 55px;
+    font-weight: bold;
+    /*outline: black;
+    border-color: black;
+    */
 }
 
 .translation{

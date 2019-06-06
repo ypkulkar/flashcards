@@ -61,7 +61,9 @@ class CreateCardMain extends React.Component {
 	  <div id="flipcard" className="">
       	<FlipCard1>
  			<Txt id="inputEng" phrase={this.state.engPhrase}  />
+			<div id="correct-box">
 			<button id="green-correct">Correct!</button>
+			</div>
 			<button onClick={flip} className="flip-symbol">
 				<img src="flip_symbol.svg" />
 			</button>

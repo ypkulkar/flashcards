@@ -108,9 +108,13 @@ var CreateCardMain = function (_React$Component) {
 							null,
 							React.createElement(Txt, { id: "inputEng", phrase: this.state.engPhrase }),
 							React.createElement(
-								"button",
-								{ id: "green-correct" },
-								"Correct!"
+								"div",
+								{ id: "correct-box" },
+								React.createElement(
+									"button",
+									{ id: "green-correct" },
+									"Correct!"
+								)
 							),
 							React.createElement(
 								"button",

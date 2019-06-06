@@ -222,7 +222,18 @@ app.get('/auth/redirect',
 	// ...with a cookie in it for the Browser! 
 	function (req, res) {
 	    console.log('Logged in and using cookies!')
-	    res.redirect('/lango.html');
+            //TODO:check for cards
+	    let userID = req.session.passport.user;
+	    db.get("SELECT * FROM Flashcards WHERE user=\'" + userID + "\'", function(err, rowData){
+		if(rowData == undefined){
+			res.redirect('/lango.html');
+		}//user has no cards
+		else{
+			res.redirect('/review.html');
+		}
+		res.end();
+		});
+	
 	});
 
 // static files in /user are only available after login

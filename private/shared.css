@@ -26,8 +26,8 @@ main{
 button{
     outline: none;
     border: none;
-    padding-left: 50px;
-    padding-right: 50px;
+    //padding-left: 50px;
+    //padding-right: 50px;
     height: 45px;
     font-size: 14pt;
     border-radius: 10px;
@@ -74,6 +74,8 @@ button{
 
 .lower_buttons{
 	background-color: #70C7A9;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 /*#save{
