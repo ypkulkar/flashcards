@@ -1,9 +1,19 @@
 .textCard{
+    display: flex;
+    flex-direction: column;
+    position: relative;
     width: 100%;
     align-self: center;
     border: 2px solid grey;
     font-size: 16pt;
     font-style: helvetica;
+}
+
+.flip-symbol {
+    width: 30%;
+    height: 30%;
+    position: absolute;
+    align-self: flex-end;
 }
 
 @media (max-width: 750px){

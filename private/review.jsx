@@ -61,10 +61,12 @@ class CreateCardMain extends React.Component {
 	  <div id="flipcard">
       	<FlipCard1>
  			<Txt id="inputEng" phrase={this.state.engPhrase}  />
+			<img className="flip-symbol" src="flip_symbol.svg"></img>
       	</FlipCard1>
 
       	<FlipCard2>
  			<Txt id="outputEng" phrase={this.state.hinPhrase} /> 
+			<img className="flip-symbol" src="flip_symbol.svg"></img>
       	</FlipCard2>
 	  </div>
 

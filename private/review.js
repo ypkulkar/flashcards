@@ -106,12 +106,14 @@ var CreateCardMain = function (_React$Component) {
             React.createElement(
               FlipCard1,
               null,
-              React.createElement(Txt, { id: "inputEng", phrase: this.state.engPhrase })
+              React.createElement(Txt, { id: "inputEng", phrase: this.state.engPhrase }),
+              React.createElement("img", { className: "flip-symbol", src: "flip_symbol.svg" })
             ),
             React.createElement(
               FlipCard2,
               null,
-              React.createElement(Txt, { id: "outputEng", phrase: this.state.hinPhrase })
+              React.createElement(Txt, { id: "outputEng", phrase: this.state.hinPhrase }),
+              React.createElement("img", { className: "flip-symbol", src: "flip_symbol.svg" })
             )
           ),
           React.createElement(
