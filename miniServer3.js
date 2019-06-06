@@ -109,10 +109,30 @@ function reviewCard(req, res, next) {
 			console.log(rowData);
 			//TODO: change from returning first card to analyzing 
 			//for which ones have been seen least, etc
+			if(rowData.length == 0){
+				res.json({});
+				res.end();
+				return;
+			}
+
 			let rows = rowData.length;
-			let randInt = getRandInt(rows);
 			let userID = req.session.passport.user;
-			console.log(userID);
+			let cutoff=0;
+			let score = 0;
+			let randInt=0;
+			let max_tries = 20;
+			let tries = 0;
+			
+			do{
+				console.log("finding a good num...");
+				randInt = getRandInt(rows);
+				let seen = rowData[randInt].seen;
+				let correct = rowData[randInt].correct;
+				score = ( Math.max(1,5 - correct) + Math.max(1,5 - seen) + 5*( (seen - correct)/seen) );
+				cutoff = getRandInt(16);
+				tries += 1;
+			} while(cutoff > score && tries < max_tries);
+
 			res.json( {"engPhrase":rowData[randInt].english, "hinPhrase":rowData[randInt].hindi});
 			db.run(`UPDATE Flashcards SET seen = ${rowData[randInt].seen + 1} WHERE rowid = ${rowData[randInt].rowid}`);
 			db.run(`UPDATE Usernames SET last_seen=${rowData[randInt].rowid} WHERE user=\'${userID}\'`, function(err){	

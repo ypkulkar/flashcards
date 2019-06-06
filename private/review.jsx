@@ -34,7 +34,7 @@ function FlipCard2(props) {
 
 function Txt(props) {
 	 if (props.phrase == undefined) {
-	    return <p className="translation">Text missing</p>;
+	    return <p className="translation"></p>;
 	    }
 	 else return <p className="translation">{props.phrase}</p>;
 	 }
@@ -96,7 +96,13 @@ class CreateCardMain extends React.Component {
 	nextFunc(event){
 
 		console.log("In the next function\n");
-		
+
+		let guess = document.getElementById("guess-box").value;
+
+		if(guess != "" && guess.toLowerCase() == document.querySelector(".translation").textContent.toLowerCase()){
+			updateCorrect(true);
+		}
+	
 		this.setState({engPhrase: "", hinPhrase: ""});		
 		
 		document.querySelector("#green-correct").style.display = "none";
@@ -121,13 +127,13 @@ class CreateCardMain extends React.Component {
 		console.log(document.querySelector(".translation"));
 		console.log(guess);
 
-		if(guess == document.querySelector(".translation").textContent){
+		if(guess.toLowerCase() == document.querySelector(".translation").textContent.toLowerCase()){
 			console.log("you guessed correct!");
-			updateCorrect(true);
+			//updateCorrect(true);
 			document.querySelector("#green-correct").style.display = "flex";
 		}else{
 			console.log("that's not correct. try again");
-			updateCorrect(false);
+			//updateCorrect(false);
 		}
 		event.preventDefault();
 	 }
@@ -138,15 +144,23 @@ class CreateCardMain extends React.Component {
 		console.log(event.target);
 		let object = JSON.parse(event.target.responseText);
 		console.log(object);
+
+		if(object == undefined || object.engPhrase == undefined){
+			alert("You have no cards to review. Please add some cards on the add page");
+			return;
+		}
+		console.log(object);
 		this.setState({engPhrase: object.engPhrase, hinPhrase: object.hinPhrase});		
 	}
 
   } // end of class
 
-ReactDOM.render(
+let page = ReactDOM.render(
     <CreateCardMain />,
     document.getElementById('root')
 );
+
+page.nextFunc();
 
 let xhr = getUserName();
 xhr.onreadystatechange = function() {
@@ -164,4 +178,3 @@ function flip() {
 		let f = document.querySelector("#flipcard");
 		f.classList.toggle('is-flipped');
 }
-
