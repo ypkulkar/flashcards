@@ -61,12 +61,16 @@ class CreateCardMain extends React.Component {
 	  <div id="flipcard">
       	<FlipCard1>
  			<Txt id="inputEng" phrase={this.state.engPhrase}  />
-			<img className="flip-symbol" src="flip_symbol.svg"></img>
+			<button onClick={flip} className="flip-symbol">
+				<img src="flip_symbol.svg" />
+			</button>
       	</FlipCard1>
 
       	<FlipCard2>
  			<Txt id="outputEng" phrase={this.state.hinPhrase} /> 
-			<img className="flip-symbol" src="flip_symbol.svg"></img>
+			<button onClick={flip} className="flip-symbol">
+				<img src="flip_symbol.svg" />
+			</button>
       	</FlipCard2>
 	  </div>
 
@@ -148,8 +152,7 @@ xhr.onreadystatechange = function() {
   
 } 
 
-let flips = document.querySelector("flip-symbol");
-flips.onclick = function() {
+function flip() {
 		let f = document.querySelector("#flipcard");
 		f.classList.toggle('is-flipped');
 }

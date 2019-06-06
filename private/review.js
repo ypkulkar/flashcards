@@ -107,13 +107,21 @@ var CreateCardMain = function (_React$Component) {
 							FlipCard1,
 							null,
 							React.createElement(Txt, { id: "inputEng", phrase: this.state.engPhrase }),
-							React.createElement("img", { className: "flip-symbol", src: "flip_symbol.svg" })
+							React.createElement(
+								"button",
+								{ onClick: flip, className: "flip-symbol" },
+								React.createElement("img", { src: "flip_symbol.svg" })
+							)
 						),
 						React.createElement(
 							FlipCard2,
 							null,
 							React.createElement(Txt, { id: "outputEng", phrase: this.state.hinPhrase }),
-							React.createElement("img", { className: "flip-symbol", src: "flip_symbol.svg" })
+							React.createElement(
+								"button",
+								{ onClick: flip, className: "flip-symbol" },
+								React.createElement("img", { src: "flip_symbol.svg" })
+							)
 						)
 					),
 					React.createElement(
@@ -205,9 +213,8 @@ xhr.onreadystatechange = function () {
 	}
 };
 
-var flips = document.querySelector("flip-symbol");
-flips.onclick = function () {
+function flip() {
 	var f = document.querySelector("#flipcard");
 	f.classList.toggle('is-flipped');
-};
+}
 

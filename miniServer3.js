@@ -4,7 +4,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20');
 
-const port = 59681; //52560;
+const port = 52560; //59681; //52560;
 const sqlite3 = require("sqlite3").verbose();  // use sqlite
 const fs = require("fs"); // file system
 const dbFileName = "Flashcards.db";
