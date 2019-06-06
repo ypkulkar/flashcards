@@ -66,9 +66,10 @@ button{
     
 #buttonbox{
     display: flex;
-    flex: 1 1 100%;
+    margin-bottom: 20px;
+    flex: 1 1 auto;
     justify-content: flex-end;
-    height: auto;
+    align-items: center;
 }
 
 .lower_buttons{
