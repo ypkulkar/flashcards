@@ -41,7 +41,7 @@ function Txt(props) {
     );
   } else return React.createElement(
     "p",
-    { id: "translation" },
+    { className: "unclicked", id: "translation" },
     props.phrase
   );
 }
@@ -54,8 +54,9 @@ var CreateCardMain = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (CreateCardMain.__proto__ || Object.getPrototypeOf(CreateCardMain)).call(this, props));
 
-    _this.state = { opinion: "" };
+    _this.state = { opinion: "Translation" };
     _this.checkReturn = _this.checkReturn.bind(_this);
+    _this.onClickFunc = _this.onClickFunc.bind(_this);
     _this.saveFunc = _this.saveFunc.bind(_this);
     return _this;
   }
@@ -86,7 +87,7 @@ var CreateCardMain = function (_React$Component) {
           React.createElement(
             Card,
             null,
-            React.createElement("textarea", { id: "inputEng", onKeyPress: this.checkReturn })
+            React.createElement("textarea", { id: "inputEng", className: "unclicked", onKeyPress: this.checkReturn, onClick: this.onClickFunc })
           ),
           React.createElement(
             Card,
@@ -115,6 +116,17 @@ var CreateCardMain = function (_React$Component) {
       );
     } // end of render function 
 
+  }, {
+    key: "onClickFunc",
+    value: function onClickFunc() {
+      var eng = document.getElementById("inputEng");
+      if (eng.classList.contains("unclicked")) {
+        eng.classList.remove("unclicked");
+        eng.classList.add("clicked");
+        eng.value = "";
+      }
+    }
+
     // onKeyPress function for the textarea element
     // When the charCode is 13, the user has hit the return key
 
@@ -122,6 +134,13 @@ var CreateCardMain = function (_React$Component) {
     key: "checkReturn",
     value: function checkReturn(event) {
       if (event.charCode == 13) {
+        var hin = document.getElementById("translation");
+        if (hin.classList.contains("unclicked")) {
+          hin.classList.remove("unclicked");
+          hin.classList.add("clicked");
+          hin.value = "";
+        }
+
         var newPhrase = document.getElementById("inputEng").value;
         document.getElementById("inputEng").value = newPhrase.slice(0, newPhrase.length);
         var _xhr = translateRequest(newPhrase);
@@ -145,6 +164,11 @@ var CreateCardMain = function (_React$Component) {
   }, {
     key: "saveFunc",
     value: function saveFunc(event) {
+      var hin = document.getElementById("translation");
+      if (hin.classList.contains("unclicked")) {
+        return;
+      }
+
       var engPhrase = document.getElementById("inputEng");
       if (engPhrase.value == "" || this.state.opinion == "") {
         return;
@@ -160,6 +184,8 @@ var CreateCardMain = function (_React$Component) {
 
 
 ReactDOM.render(React.createElement(CreateCardMain, null), document.getElementById('root'));
+
+document.getElementById("inputEng").value = "English";
 
 var xhr = getUserName();
 xhr.onreadystatechange = function () {

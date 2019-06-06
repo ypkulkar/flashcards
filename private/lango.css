@@ -22,6 +22,15 @@
 
 #translation{
     //font-size: 16pt;
+    font-family: helvetica;
+}
+
+#translation.unclicked{
+    color: grey;
+}
+
+#translation.clicked{
+    color: black;
 }
 
 .textCard{
@@ -33,7 +42,7 @@
     align-self: center;
     border: 2px solid grey;
     font-size: 16pt;
-    font-style: helvetica;
+    font-family: helvetica;
     text-align: center;
 }
 
@@ -53,7 +62,17 @@
 
 textarea{
     height: auto;
+    font-size: 16pt;
     text-align: center;
     vertical-align: middle;
+    font-family: helvetica;
+}
+
+textarea.unclicked{
+    color: grey;
+}
+
+textarea.clicked{
+    color: black;
 }
 

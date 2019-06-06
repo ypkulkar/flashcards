@@ -23,7 +23,7 @@ function Txt(props) {
 	 if (props.phrase == undefined) {
 	    return <p id="translation">Text missing</p>;
 	    }
-	 else return <p id="translation">{props.phrase}</p>;
+	 else return <p className="unclicked" id="translation">{props.phrase}</p>;
 	 }
 
 
@@ -31,8 +31,9 @@ class CreateCardMain extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { opinion: "" }
+      this.state = { opinion: "Translation" }
       this.checkReturn = this.checkReturn.bind(this);
+      this.onClickFunc = this.onClickFunc.bind(this);
 	  this.saveFunc = this.saveFunc.bind(this);
       }
 
@@ -44,11 +45,11 @@ class CreateCardMain extends React.Component {
       </Header>
       <div id="middle">
       <Card>
- 	<textarea id="inputEng" onKeyPress={this.checkReturn} />
+ 	<textarea id="inputEng" className="unclicked" onKeyPress={this.checkReturn} onClick={this.onClickFunc} />
       </Card>
       
       <Card>
- 	<Txt id="outputEng" phrase={this.state.opinion} /> 
+ 	<Txt id="outputEng"  phrase={this.state.opinion} /> 
       </Card>
       <div id="buttonbox">
           <button id="save" className="lower_buttons" onClick={this.saveFunc}>Save</button>
@@ -61,10 +62,26 @@ class CreateCardMain extends React.Component {
       );
     } // end of render function 
 
+    onClickFunc() {
+	let eng = document.getElementById("inputEng");
+	if(eng.classList.contains("unclicked")){
+		eng.classList.remove("unclicked");
+		eng.classList.add("clicked");
+		eng.value = "";
+	}
+    }
+
     // onKeyPress function for the textarea element
     // When the charCode is 13, the user has hit the return key
     checkReturn(event) {
 	 if (event.charCode == 13) {
+            let hin = document.getElementById("translation");
+		if(hin.classList.contains("unclicked")){
+			hin.classList.remove("unclicked");
+			hin.classList.add("clicked");
+			hin.value = "";
+		}
+
 	    let newPhrase = document.getElementById("inputEng").value;
 		document.getElementById("inputEng").value = newPhrase.slice(0, newPhrase.length);
 		let xhr = translateRequest(newPhrase);
@@ -86,7 +103,12 @@ class CreateCardMain extends React.Component {
 	    }
 	 }
 
-	saveFunc(event){
+	saveFunc(event){	
+            let hin = document.getElementById("translation");
+	    if(hin.classList.contains("unclicked")){
+		return;
+	    }
+
 		let engPhrase = document.getElementById("inputEng");
 		if(engPhrase.value == "" || this.state.opinion == ""){
 			return;	
@@ -105,6 +127,7 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
+document.getElementById("inputEng").value = "English";
 
 let xhr = getUserName();
 xhr.onreadystatechange = function() {

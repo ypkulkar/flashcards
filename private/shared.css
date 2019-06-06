@@ -122,8 +122,11 @@ button{
 textarea{
     outline: none;
     resize: none;
+    padding-top: 15px;
+    padding-left: 15px;
     width: 98%;
     height: 97%;    
     border: none;
-    font-style: helvetica;
+    font-family: helvetica;
+    font-size: 14pt;
 }
